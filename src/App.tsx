@@ -124,6 +124,18 @@ export const App: React.FC = () => {
     <>
       <CustomCursor />
 
+      {/* SVG clip-path definitions for the flowing waves in Navbar */}
+      <svg width="0" height="0" className="absolute pointer-events-none" style={{ position: 'absolute', width: 0, height: 0 }}>
+        <defs>
+          <clipPath id="wave-clip-front" clipPathUnits="objectBoundingBox">
+            <path d="M0,0.75 C0.0833,0.4 0.1667,1 0.25,0.75 C0.3333,0.4 0.4167,1 0.5,0.75 C0.5833,0.4 0.6667,1 0.75,0.75 C0.8333,0.4 0.9167,1 1,0.75 L1,0 L0,0 Z" />
+          </clipPath>
+          <clipPath id="wave-clip-back" clipPathUnits="objectBoundingBox">
+            <path d="M0,0.6 C0.0833,0.25 0.1667,0.9 0.25,0.6 C0.3333,0.25 0.4167,0.9 0.5,0.6 C0.5833,0.25 0.6667,0.9 0.75,0.6 C0.8333,0.25 0.9167,0.9 1,0.6 L1,0 L0,0 Z" />
+          </clipPath>
+        </defs>
+      </svg>
+
       {/* Industrial Shutter preloader */}
       {!isLoaded ? (
         <Preloader onComplete={() => setIsLoaded(true)} />
@@ -169,30 +181,56 @@ export const App: React.FC = () => {
               
               {/* Layer 1: Back Wave (flowing) */}
               <div className="absolute inset-0 w-[200%] h-full flex animate-nav-wave-slow opacity-60">
-                <svg viewBox="0 0 1800 100" preserveAspectRatio="none" className={`w-1/2 h-full transition-colors duration-500 ${
-                  isScrolled && !mobileMenuOpen ? 'text-[#0E5BFF]/15' : 'text-[#0E5BFF]/5'
-                } fill-current flex-shrink-0`}>
-                  <path d="M0,60 C150,25 300,90 450,60 C600,25 750,90 900,60 C1050,25 1200,90 1350,60 C1500,25 1650,90 1800,60 L1800,0 L0,0 Z" />
-                </svg>
-                <svg viewBox="0 0 1800 100" preserveAspectRatio="none" className={`w-1/2 h-full transition-colors duration-500 ${
-                  isScrolled && !mobileMenuOpen ? 'text-[#0E5BFF]/15' : 'text-[#0E5BFF]/5'
-                } fill-current flex-shrink-0`}>
-                  <path d="M0,60 C150,25 300,90 450,60 C600,25 750,90 900,60 C1050,25 1200,90 1350,60 C1500,25 1650,90 1800,60 L1800,0 L0,0 Z" />
-                </svg>
+                <div 
+                  className="w-1/2 h-full flex-shrink-0 relative overflow-hidden -mr-[1px]"
+                  style={{
+                    clipPath: 'url(#wave-clip-back)',
+                    WebkitClipPath: 'url(#wave-clip-back)'
+                  }}
+                >
+                  <div className={`absolute inset-0 transition-colors duration-500 ${
+                    isScrolled && !mobileMenuOpen ? 'bg-[#0E5BFF]/15' : 'bg-[#0E5BFF]/5'
+                  }`} />
+                </div>
+                <div 
+                  className="w-1/2 h-full flex-shrink-0 relative overflow-hidden"
+                  style={{
+                    clipPath: 'url(#wave-clip-back)',
+                    WebkitClipPath: 'url(#wave-clip-back)'
+                  }}
+                >
+                  <div className={`absolute inset-0 transition-colors duration-500 ${
+                    isScrolled && !mobileMenuOpen ? 'bg-[#0E5BFF]/15' : 'bg-[#0E5BFF]/5'
+                  }`} />
+                </div>
               </div>
 
-              {/* Layer 2: Front Wave (flowing, matches main rect background) */}
+              {/* Layer 2: Front Wave (flowing, matches main rect background and includes the mesh pattern) */}
               <div className="absolute inset-0 w-[200%] h-full flex animate-nav-wave-fast">
-                <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className={`w-1/2 h-full transition-colors duration-500 ${
-                  isScrolled && !mobileMenuOpen ? 'text-luxury-bg-ivory/95' : 'text-luxury-bg-ivory/45'
-                } fill-current flex-shrink-0`}>
-                  <path d="M0,75 C120,40 240,100 360,75 C480,40 600,100 720,75 C840,40 960,100 1080,75 C1200,40 1320,100 1440,75 L1440,0 L0,0 Z" />
-                </svg>
-                <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className={`w-1/2 h-full transition-colors duration-500 ${
-                  isScrolled && !mobileMenuOpen ? 'text-luxury-bg-ivory/95' : 'text-luxury-bg-ivory/45'
-                } fill-current flex-shrink-0`}>
-                  <path d="M0,75 C120,40 240,100 360,75 C480,40 600,100 720,75 C840,40 960,100 1080,75 C1200,40 1320,100 1440,75 L1440,0 L0,0 Z" />
-                </svg>
+                <div 
+                  className="w-1/2 h-full flex-shrink-0 relative overflow-hidden -mr-[1px]"
+                  style={{
+                    clipPath: 'url(#wave-clip-front)',
+                    WebkitClipPath: 'url(#wave-clip-front)'
+                  }}
+                >
+                  <div className={`absolute inset-0 transition-colors duration-500 ${
+                    isScrolled && !mobileMenuOpen ? 'bg-luxury-bg-ivory/95' : 'bg-luxury-bg-ivory/45'
+                  }`} />
+                  <LatticeworkPatternNavbar />
+                </div>
+                <div 
+                  className="w-1/2 h-full flex-shrink-0 relative overflow-hidden"
+                  style={{
+                    clipPath: 'url(#wave-clip-front)',
+                    WebkitClipPath: 'url(#wave-clip-front)'
+                  }}
+                >
+                  <div className={`absolute inset-0 transition-colors duration-500 ${
+                    isScrolled && !mobileMenuOpen ? 'bg-luxury-bg-ivory/95' : 'bg-luxury-bg-ivory/45'
+                  }`} />
+                  <LatticeworkPatternNavbar />
+                </div>
               </div>
 
             </div>
