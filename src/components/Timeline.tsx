@@ -208,7 +208,7 @@ export const Timeline: React.FC = () => {
       </div>
 
       {/* WaveDivider separating Gallery from InstagramGrid */}
-      <WaveDivider height="h-16" backWaveColor="text-[#0E5BFF]/5" frontWaveColor="text-white" backWaveOpacity={0.4} />
+      <WaveDivider height="h-16" backWaveColor="text-[#0E5BFF]/5" frontWaveColor="text-[#f8f7f4]" backWaveOpacity={0.4} />
     </section>
   );
 };

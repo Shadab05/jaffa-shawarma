@@ -98,8 +98,8 @@ const MenuCard: React.FC<{ item: MenuItem }> = ({ item }) => {
     const xPercent = x / rect.width - 0.5;
     const yPercent = y / rect.height - 0.5;
 
-    setRotateX(-yPercent * 12);
-    setRotateY(xPercent * 12);
+    setRotateX(-yPercent * 10);
+    setRotateY(xPercent * 10);
 
     e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
     e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
@@ -120,103 +120,113 @@ const MenuCard: React.FC<{ item: MenuItem }> = ({ item }) => {
         transformStyle: 'preserve-3d',
         transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
       }}
-      className="relative rounded-[32px] p-6 bg-white/50 backdrop-blur-xl border border-white/50 shadow-[0_15px_45px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_60px_rgba(14,91,255,0.15)] hover:border-blue-500/20 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden group cursor-none h-[520px]"
+      className="relative rounded-[2.5rem] bg-zinc-950 border border-zinc-800 shadow-[0_20px_50px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_60px_rgba(14,91,255,0.22)] transition-all duration-500 flex flex-col justify-end overflow-hidden group cursor-none h-[520px] w-full"
     >
-      {/* Background radial spotlight glow on hover */}
-      <div 
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{
-          background: `radial-gradient(350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(14, 91, 255, 0.06), transparent 85%)`
-        }}
-      />
+      {/* Background full-height photo */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={item.imageUrl}
+          alt={item.name}
+          className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110 filter brightness-[0.7] group-hover:brightness-[0.52]"
+        />
+        {/* Dark Vignette Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/45 to-transparent z-1" />
+      </div>
 
-      {/* Main card body */}
-      <div>
-        {/* Card Header image frame */}
-        <div className="w-full h-52 rounded-2xl overflow-hidden relative border border-zinc-100/30 shadow-md mb-6 bg-zinc-950">
-          <img
-            src={item.imageUrl}
-            alt={item.name}
-            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-[0.98]"
-          />
-          {item.badge && (
-            <span className="absolute top-4 left-4 px-3 py-1 bg-luxury-accent-blue text-white font-inter text-[8px] tracking-[0.2em] uppercase rounded-full shadow-md font-bold z-10">
-              {item.badge}
-            </span>
+      {/* Badge in top-left */}
+      {item.badge && (
+        <span className="absolute top-6 left-6 px-3.5 py-1 bg-luxury-accent-blue text-white font-inter text-[8px] tracking-[0.2em] uppercase rounded-full shadow-md font-extrabold z-10">
+          {item.badge}
+        </span>
+      )}
+
+      {/* Floating Info trigger in top-right for Nutrition */}
+      <button
+        onClick={() => setShowNutrition(!showNutrition)}
+        className="absolute top-6 right-6 w-8 h-8 rounded-full bg-white/15 backdrop-blur-md hover:bg-luxury-accent-blue text-white flex items-center justify-center border border-white/20 transition-all duration-300 z-20 text-[9px] tracking-wider uppercase font-bold cursor-none"
+      >
+        {showNutrition ? "X" : "i"}
+      </button>
+
+      {/* Card Content Overlay */}
+      <div className="relative z-10 p-7 flex flex-col justify-end h-full text-white pointer-events-none">
+        
+        {/* Dynamic nutritional facts popup */}
+        <AnimatePresence>
+          {showNutrition && (
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 15 }}
+              className="absolute inset-x-6 top-16 bg-zinc-950/90 backdrop-blur-md rounded-2xl p-4 border border-white/10 shadow-2xl z-20 pointer-events-auto"
+            >
+              <h4 className="font-editorial text-xs font-bold text-[#3B82F6] tracking-wider uppercase mb-3 text-center">NUTRITIONAL INFO</h4>
+              <div className="grid grid-cols-4 gap-2">
+                <div className="bg-white/5 rounded-xl p-2 text-center border border-white/5">
+                  <div className="font-mono text-[10px] font-bold text-white">{item.nutrition.calories.split(' ')[0]}</div>
+                  <div className="font-inter text-[7px] text-white/50 uppercase mt-1">Cal</div>
+                </div>
+                <div className="bg-white/5 rounded-xl p-2 text-center border border-white/5">
+                  <div className="font-mono text-[10px] font-bold text-white">{item.nutrition.protein}</div>
+                  <div className="font-inter text-[7px] text-white/50 uppercase mt-1">Prot</div>
+                </div>
+                <div className="bg-white/5 rounded-xl p-2 text-center border border-white/5">
+                  <div className="font-mono text-[10px] font-bold text-white">{item.nutrition.fat}</div>
+                  <div className="font-inter text-[7px] text-white/50 uppercase mt-1">Fat</div>
+                </div>
+                <div className="bg-white/5 rounded-xl p-2 text-center border border-white/5">
+                  <div className="font-mono text-[10px] font-bold text-white">{item.nutrition.carbs}</div>
+                  <div className="font-inter text-[7px] text-white/50 uppercase mt-1">Carb</div>
+                </div>
+              </div>
+            </motion.div>
           )}
-        </div>
+        </AnimatePresence>
 
-        {/* Text descriptions */}
-        <div className="flex justify-between items-start mb-2">
-          <span className="font-inter text-[9px] text-luxury-accent-blue font-bold tracking-widest uppercase">
+        {/* Category & Price */}
+        <div className="flex justify-between items-end mb-2">
+          <span className="font-inter text-[9px] text-[#3B82F6] font-bold tracking-widest uppercase">
             {item.category}
           </span>
-          <span className="font-editorial text-lg text-luxury-text-black font-black">
+          <span className="font-editorial text-lg text-white font-black">
             {item.price}
           </span>
         </div>
 
-        <h3 className="font-editorial text-xl md:text-2xl text-luxury-text-black tracking-wide font-black uppercase mb-3">
+        {/* Title */}
+        <h3 className="font-editorial text-2xl text-white tracking-wide font-black uppercase mb-3 leading-none">
           {item.name}
         </h3>
 
-        {/* Interactive toggle block for description or nutritional facts */}
-        <div className="relative h-24 overflow-hidden mb-4">
-          <AnimatePresence mode="wait">
-            {!showNutrition ? (
-              <motion.p
-                key="desc"
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                className="font-inter text-xs text-zinc-500 leading-relaxed absolute inset-0"
-              >
-                {item.description}
-              </motion.p>
-            ) : (
-              <motion.div
-                key="nutri"
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                className="grid grid-cols-4 gap-2 absolute inset-0 pt-2"
-              >
-                <div className="bg-luxury-bg-cream/50 rounded-xl p-2 text-center border border-zinc-100">
-                  <div className="font-mono text-xs font-bold text-luxury-text-black">{item.nutrition.calories}</div>
-                  <div className="font-inter text-[8px] text-zinc-400 uppercase tracking-wider mt-1">Cal</div>
-                </div>
-                <div className="bg-luxury-bg-cream/50 rounded-xl p-2 text-center border border-zinc-100">
-                  <div className="font-mono text-xs font-bold text-luxury-text-black">{item.nutrition.protein}</div>
-                  <div className="font-inter text-[8px] text-zinc-400 uppercase tracking-wider mt-1">Protein</div>
-                </div>
-                <div className="bg-luxury-bg-cream/50 rounded-xl p-2 text-center border border-zinc-100">
-                  <div className="font-mono text-xs font-bold text-luxury-text-black">{item.nutrition.fat}</div>
-                  <div className="font-inter text-[8px] text-zinc-400 uppercase tracking-wider mt-1">Fat</div>
-                </div>
-                <div className="bg-luxury-bg-cream/50 rounded-xl p-2 text-center border border-zinc-100">
-                  <div className="font-mono text-xs font-bold text-luxury-text-black">{item.nutrition.carbs}</div>
-                  <div className="font-inter text-[8px] text-zinc-400 uppercase tracking-wider mt-1">Carbs</div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+        {/* Description & Buttons Group inside container that expands/reveals */}
+        <div className="flex flex-col gap-4 overflow-hidden transition-all duration-500 max-h-16 group-hover:max-h-56 pointer-events-auto">
+          
+          <p className="font-inter text-xs text-white/70 leading-relaxed">
+            {item.description}
+          </p>
+
+          {/* Action triggers: Swiggy and Zomato buttons side-by-side */}
+          <div className="flex gap-3 pt-1">
+            <a
+              href="https://www.swiggy.com/search?query=Jaffa+Shawarma"
+              target="_blank"
+              rel="noreferrer"
+              className="flex-1 py-2.5 bg-[#FC8019] hover:bg-[#E0690C] text-white font-inter text-[9px] tracking-widest uppercase font-bold text-center flex items-center justify-center gap-1.5 cursor-none rounded-full shadow-[0_4px_12px_rgba(252,128,25,0.2)] transition-all duration-300"
+            >
+              Swiggy
+            </a>
+            <a
+              href="https://www.zomato.com/bhopal/restaurants?q=Jaffa+Shawarma"
+              target="_blank"
+              rel="noreferrer"
+              className="flex-1 py-2.5 bg-[#CB192E] hover:bg-[#A81021] text-white font-inter text-[9px] tracking-widest uppercase font-bold text-center flex items-center justify-center gap-1.5 cursor-none rounded-full shadow-[0_4px_12px_rgba(203,25,46,0.2)] transition-all duration-300"
+            >
+              Zomato
+            </a>
+          </div>
+
         </div>
-      </div>
 
-      {/* Action triggers */}
-      <div className="flex justify-between items-center border-t border-zinc-100 pt-4 mt-auto">
-        <button
-          onClick={() => setShowNutrition(!showNutrition)}
-          className="font-inter text-[9px] text-zinc-400 hover:text-luxury-accent-blue tracking-widest uppercase transition-colors"
-        >
-          {showNutrition ? "Show Details" : "Nutritional Facts"}
-        </button>
-
-        <button
-          className="px-5 py-2.5 bg-gradient-to-r from-[#0E5BFF] to-[#3B82F6] hover:shadow-[0_4px_12px_rgba(14,91,255,0.3)] text-white font-inter text-[9px] tracking-widest uppercase rounded-full transition-all duration-300 font-bold"
-        >
-          Order Now
-        </button>
       </div>
     </motion.div>
   );

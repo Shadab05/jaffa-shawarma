@@ -54,7 +54,7 @@ export const Navbar3DLogo: React.FC<Navbar3DLogoProps> = ({ variant = 'navbar' }
     // Load Model
     const loader = new GLTFLoader();
     loader.load(
-      '/assets/3D logo/base_basic_shaded.glb',
+      'assets/3D logo/base_basic_shaded.glb',
       (gltf) => {
         const model = gltf.scene;
         

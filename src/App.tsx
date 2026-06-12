@@ -259,6 +259,12 @@ export const App: React.FC = () => {
                 >
                   Menu
                 </button>
+                <button 
+                  onClick={() => scrollToSection('journey')} 
+                  className="font-inter text-[9px] tracking-[0.25em] uppercase text-luxury-text-charcoal hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
+                >
+                  Gallery
+                </button>
               </div>
 
               {/* Left spacer on Mobile */}
@@ -290,7 +296,7 @@ export const App: React.FC = () => {
               </div>
 
               {/* Right Links & Direct Contact for Desktop */}
-              <div className="hidden lg:flex gap-6 xl:gap-8 justify-end items-center w-1/3">
+              <div className="hidden lg:flex gap-4 xl:gap-5 justify-end items-center w-1/3">
                 <button 
                   onClick={() => scrollToSection('outlets')} 
                   className="font-inter text-[9px] tracking-[0.25em] uppercase text-luxury-text-charcoal hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
@@ -312,6 +318,28 @@ export const App: React.FC = () => {
                   className="px-4 py-2 bg-gradient-to-r from-[#0E5BFF] to-[#3B82F6] hover:shadow-[0_4px_12px_rgba(14,91,255,0.3)] text-white font-inter text-[9px] tracking-[0.15em] uppercase rounded-full transition-all duration-300 font-bold flex items-center gap-1.5 cursor-none"
                 >
                   WhatsApp Us
+                </a>
+
+                {/* Swiggy Button */}
+                <a 
+                  href="https://www.swiggy.com/search?query=Jaffa+Shawarma"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-7 h-7 rounded-full bg-[#FC8019] text-white flex items-center justify-center font-inter text-[9px] font-black cursor-none hover:scale-110 transition-transform shadow-md"
+                  title="Order on Swiggy"
+                >
+                  S
+                </a>
+
+                {/* Zomato Button */}
+                <a 
+                  href="https://www.zomato.com/bhopal/restaurants?q=Jaffa+Shawarma"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-7 h-7 rounded-full bg-[#CB192E] text-white flex items-center justify-center font-inter text-[9px] font-black cursor-none hover:scale-110 transition-transform shadow-md"
+                  title="Order on Zomato"
+                >
+                  Z
                 </a>
               </div>
 
@@ -335,8 +363,13 @@ export const App: React.FC = () => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="fixed inset-0 z-[998] bg-luxury-bg-ivory flex flex-col justify-center items-center gap-6 lg:hidden h-screen w-screen"
+                className="fixed inset-0 z-[998] bg-luxury-bg-ivory flex flex-col justify-center items-center gap-5 lg:hidden h-screen w-screen relative overflow-hidden"
               >
+                {/* Flowing background geometric star patterns for luxury feel */}
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+                  <LatticeworkPatternNavbar />
+                </div>
+
                 <button 
                   onClick={() => { scrollToSection('story'); setMobileMenuOpen(false); }} 
                   className="font-editorial text-2xl tracking-[0.2em] uppercase text-luxury-text-black hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
@@ -353,7 +386,7 @@ export const App: React.FC = () => {
                   onClick={() => { scrollToSection('journey'); setMobileMenuOpen(false); }} 
                   className="font-editorial text-2xl tracking-[0.2em] uppercase text-luxury-text-black hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
                 >
-                  The Prep
+                  Gallery
                 </button>
                 <button 
                   onClick={() => { scrollToSection('outlets'); setMobileMenuOpen(false); }} 
@@ -369,27 +402,50 @@ export const App: React.FC = () => {
                 </button>
                 
                 {/* Mobile Direct Connections */}
-                <div className="flex flex-col gap-3 mt-4 w-full px-12 max-w-sm">
+                <div className="flex flex-col gap-3 mt-4 w-full px-12 max-w-sm relative z-10">
+                  {/* Swiggy & Zomato side-by-side */}
+                  <div className="flex gap-3 w-full">
+                    <a 
+                      href="https://www.swiggy.com/search?query=Jaffa+Shawarma"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex-1 py-3 bg-[#FC8019] text-white font-inter text-[10px] tracking-[0.2em] uppercase rounded-full shadow-md font-bold text-center cursor-none flex items-center justify-center gap-1.5"
+                    >
+                      Swiggy
+                    </a>
+                    <a 
+                      href="https://www.zomato.com/bhopal/restaurants?q=Jaffa+Shawarma"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex-1 py-3 bg-[#CB192E] text-white font-inter text-[10px] tracking-[0.2em] uppercase rounded-full shadow-md font-bold text-center cursor-none flex items-center justify-center gap-1.5"
+                    >
+                      Zomato
+                    </a>
+                  </div>
+
                   <a 
                     href="https://wa.me/919303473703?text=Hi%20Jaffa%20Shawarma!%20I'd%20like%20to%20order."
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full py-3 bg-gradient-to-r from-[#0E5BFF] to-[#3B82F6] text-white font-inter text-[10px] tracking-[0.2em] uppercase rounded-full shadow-lg transition-all duration-300 font-bold text-center cursor-none"
+                    className="w-full py-3 bg-gradient-to-r from-[#0E5BFF] to-[#3B82F6] text-white font-inter text-[10px] tracking-[0.2em] uppercase rounded-full shadow-md transition-all duration-300 font-bold text-center cursor-none"
                   >
                     WhatsApp Chat
                   </a>
-                  <a 
-                    href="tel:+919303473703"
-                    className="w-full py-3 border border-zinc-300 text-luxury-text-charcoal hover:text-luxury-accent-blue font-inter text-[10px] tracking-[0.2em] uppercase rounded-full shadow-md transition-colors font-bold text-center cursor-none"
-                  >
-                    Call Gulmohar
-                  </a>
-                  <a 
-                    href="tel:+918109484979"
-                    className="w-full py-3 border border-zinc-300 text-luxury-text-charcoal hover:text-luxury-accent-blue font-inter text-[10px] tracking-[0.2em] uppercase rounded-full shadow-md transition-colors font-bold text-center cursor-none"
-                  >
-                    Call TT Nagar
-                  </a>
+                  
+                  <div className="flex gap-2 w-full">
+                    <a 
+                      href="tel:+919303473703"
+                      className="flex-1 py-2.5 border border-zinc-200 text-luxury-text-charcoal hover:text-luxury-accent-blue font-inter text-[9px] tracking-[0.15em] uppercase rounded-full shadow-sm transition-colors font-bold text-center cursor-none bg-white/50 backdrop-blur-sm"
+                    >
+                      Gulmohar Call
+                    </a>
+                    <a 
+                      href="tel:+918109484979"
+                      className="flex-1 py-2.5 border border-zinc-200 text-luxury-text-charcoal hover:text-luxury-accent-blue font-inter text-[9px] tracking-[0.15em] uppercase rounded-full shadow-sm transition-colors font-bold text-center cursor-none bg-white/50 backdrop-blur-sm"
+                    >
+                      TT Nagar Call
+                    </a>
+                  </div>
                 </div>
               </motion.div>
             )}

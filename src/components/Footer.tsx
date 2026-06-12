@@ -77,12 +77,33 @@ export const Footer: React.FC = () => {
         </p>
 
         {/* Footer Navigation Link Line */}
-        <div className="flex flex-wrap gap-x-8 gap-y-3 justify-center items-center font-inter text-[9px] tracking-[0.2em] uppercase text-zinc-500 mb-8 border-b border-zinc-100 pb-8 w-full max-w-lg">
+        <div className="flex flex-wrap gap-x-8 gap-y-3 justify-center items-center font-inter text-[9px] tracking-[0.2em] uppercase text-zinc-500 mb-6 w-full max-w-lg">
           <a href="#hero" className="hover:text-luxury-accent-blue transition-colors cursor-none">Landing</a>
           <a href="#story" className="hover:text-luxury-accent-blue transition-colors cursor-none">Our Story</a>
-          <a href="#reveal" className="hover:text-luxury-accent-blue transition-colors cursor-none">3D Logo</a>
           <a href="#menu" className="hover:text-luxury-accent-blue transition-colors cursor-none">Menu</a>
-          <a href="#outlets" className="hover:text-luxury-accent-blue transition-colors cursor-none">Locations</a>
+          <a href="#journey" className="hover:text-luxury-accent-blue transition-colors cursor-none">Gallery</a>
+          <a href="#outlets" className="hover:text-luxury-accent-blue transition-colors cursor-none">Kitchens</a>
+          <a href="#social" className="hover:text-luxury-accent-blue transition-colors cursor-none">Journal</a>
+        </div>
+
+        {/* Order Delivery Platforms */}
+        <div className="flex gap-4 justify-center items-center mb-8 border-b border-zinc-100 pb-8 w-full max-w-lg">
+          <a 
+            href="https://www.swiggy.com/search?query=Jaffa+Shawarma" 
+            target="_blank" 
+            rel="noreferrer"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#FC8019]/10 text-[#FC8019] hover:bg-[#FC8019] hover:text-white transition-all duration-300 border border-[#FC8019]/20 font-inter text-[10px] tracking-wider uppercase font-bold cursor-none"
+          >
+            Order on Swiggy
+          </a>
+          <a 
+            href="https://www.zomato.com/bhopal/restaurants?q=Jaffa+Shawarma" 
+            target="_blank" 
+            rel="noreferrer"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#CB192E]/10 text-[#CB192E] hover:bg-[#CB192E] hover:text-white transition-all duration-300 border border-[#CB192E]/20 font-inter text-[10px] tracking-wider uppercase font-bold cursor-none"
+          >
+            Order on Zomato
+          </a>
         </div>
 
         {/* Copyright info */}
