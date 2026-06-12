@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
+import { Star, Quote } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface Review {
   id: number;
@@ -44,9 +47,39 @@ const REVIEWS: Review[] = [
 export const Reviews: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const cards = gsap.utils.toArray('.testimonial-card');
+    
+    // ScrollTrigger matchMedia for mobile stacking
+    const mm = gsap.matchMedia();
+
+    mm.add("(max-width: 767px)", () => {
+      cards.forEach((card: any, index: number) => {
+        // Animate all cards except the very last one, which sits on top of the stack
+        if (index === cards.length - 1) return;
+
+        gsap.to(card, {
+          scale: 0.9,
+          opacity: 0.35,
+          yPercent: -12,
+          scrollTrigger: {
+            trigger: card,
+            start: "top 120px",
+            end: "bottom 120px",
+            scrub: true,
+            invalidateOnRefresh: true
+          }
+        });
+      });
+    });
+
+    return () => mm.revert();
+  }, []);
+
   return (
-    <section id="reviews" className="relative py-24 md:py-32 overflow-hidden z-20">
-      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] blue-glow-radial opacity-50 pointer-events-none" />
+    <section id="reviews" ref={containerRef} className="relative py-24 md:py-32 overflow-hidden z-20 bg-luxury-bg-ivory/30">
+      {/* Decorative glows */}
+      <div className="absolute top-1/2 left-0 w-[450px] h-[450px] bg-luxury-accent-blue/5 rounded-full blur-[130px] pointer-events-none" />
 
       <div className="container mx-auto px-6">
         
@@ -64,41 +97,47 @@ export const Reviews: React.FC = () => {
           </p>
         </div>
 
-        {/* Reviews Horizontal Auto-Scroll (or Grid on small screens) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto">
+        {/* Reviews stacking layout (flex-col for mobile, grid for desktop) */}
+        <div className="flex flex-col gap-10 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 lg:gap-8 max-w-6xl mx-auto pb-12 md:pb-0">
           {REVIEWS.map((review, index) => (
-            <motion.div
+            <div
               key={review.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              className="bg-white rounded-3xl p-6 border border-zinc-200/50 shadow-xl relative overflow-hidden flex flex-col justify-between group hover:border-luxury-accent-blue/30 transition-all duration-300"
+              style={{
+                // Increment z-index on mobile so later cards lay naturally on top of older cards
+                zIndex: index + 10
+              }}
+              className="testimonial-card bg-[#0E5BFF] text-white rounded-[2.5rem] p-8 md:p-6 lg:p-7 border border-white/10 shadow-[0_20px_50px_rgba(14,91,255,0.22)] relative overflow-hidden flex flex-col justify-between group transition-all duration-300 w-full sticky top-[130px] md:relative md:top-auto"
             >
-              <div>
+              {/* Backlit glow details on cards */}
+              <div className="absolute -right-6 -top-6 w-24 h-24 bg-white/5 rounded-full blur-xl pointer-events-none group-hover:scale-125 transition-transform duration-500" />
+              
+              {/* Quote icon background */}
+              <Quote className="absolute right-6 top-6 w-8 h-8 text-white/10 pointer-events-none" />
+
+              <div className="relative z-10">
                 {/* Stars */}
-                <div className="flex gap-1 mb-6 text-amber-500">
+                <div className="flex gap-1 mb-6 text-amber-300">
                   {Array.from({ length: review.rating }).map((_, i) => (
-                    <Star key={i} size={14} className="fill-amber-500" />
+                    <Star key={i} size={15} className="fill-amber-300 text-amber-300" />
                   ))}
                 </div>
 
                 {/* Review Text */}
-                <p className="font-inter text-xs text-zinc-500 leading-relaxed mb-6 italic">
+                <p className="font-inter text-xs text-white/90 leading-relaxed mb-8 italic">
                   "{review.text}"
                 </p>
               </div>
 
               {/* Author */}
-              <div className="border-t border-zinc-100 pt-4 flex justify-between items-center mt-auto">
-                <span className="font-editorial text-sm font-bold text-luxury-text-black uppercase">
+              <div className="border-t border-white/15 pt-5 flex justify-between items-center mt-auto relative z-10">
+                <span className="font-editorial text-sm font-black text-white uppercase tracking-wider">
                   {review.name}
                 </span>
-                <span className="font-inter text-[9px] text-zinc-400 uppercase tracking-wider">
+                <span className="font-inter text-[9px] text-white/70 uppercase tracking-widest font-extrabold">
                   {review.location}
                 </span>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 

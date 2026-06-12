@@ -86,12 +86,20 @@ export const Navbar3DLogo: React.FC<Navbar3DLogoProps> = ({ variant = 'navbar' }
       }
     );
 
-    // Mouse sway tracking
+    // Mouse & Touch sway tracking
     const mouse = { x: 0, targetX: 0 };
     const onMouseMove = (event: MouseEvent) => {
       mouse.targetX = (event.clientX / window.innerWidth) * 2 - 1;
     };
+    const onTouchMove = (event: TouchEvent) => {
+      if (event.touches.length > 0) {
+        const touch = event.touches[0];
+        mouse.targetX = (touch.clientX / window.innerWidth) * 2 - 1;
+      }
+    };
     window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('touchstart', onTouchMove, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
 
     // Animation Loop
     let animationFrameId: number;
@@ -111,6 +119,8 @@ export const Navbar3DLogo: React.FC<Navbar3DLogoProps> = ({ variant = 'navbar' }
 
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('touchstart', onTouchMove);
+      window.removeEventListener('touchmove', onTouchMove);
       cancelAnimationFrame(animationFrameId);
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);

@@ -156,13 +156,22 @@ export const ThreeDLogo: React.FC = () => {
       }
     );
 
-    // 6. Interactive Mouse Movements
+    // 6. Interactive Mouse & Touch Movements
     const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
     const onMouseMove = (event: MouseEvent) => {
       mouse.targetX = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.targetY = -(event.clientY / window.innerHeight) * 2 + 1;
     };
+    const onTouchMove = (event: TouchEvent) => {
+      if (event.touches.length > 0) {
+        const touch = event.touches[0];
+        mouse.targetX = (touch.clientX / window.innerWidth) * 2 - 1;
+        mouse.targetY = -(touch.clientY / window.innerHeight) * 2 + 1;
+      }
+    };
     window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('touchstart', onTouchMove, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
 
     // 7. Scroll Tracking for Rotation
     let scrollPercent = 0;
@@ -244,6 +253,8 @@ export const ThreeDLogo: React.FC = () => {
     // 10. Memory Cleanups
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('touchstart', onTouchMove);
+      window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);

@@ -160,7 +160,7 @@ export const Contact: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 max-w-6xl mx-auto items-stretch relative">
           
           {/* Left: Branch Selector List */}
-          <div className="col-span-1 lg:col-span-5 flex flex-col gap-4 max-h-[520px] overflow-y-auto pr-2 custom-scrollbar z-10">
+          <div className="col-span-1 lg:col-span-5 flex flex-col gap-4 max-h-none lg:max-h-[600px] overflow-y-visible lg:overflow-y-auto pr-2 custom-scrollbar z-10">
             <AnimatePresence mode="popLayout">
               {filteredBranches.map((branch) => {
                 const isActive = selectedBranch.id === branch.id;
@@ -173,28 +173,34 @@ export const Contact: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     key={branch.id}
                     onClick={() => setSelectedBranch(branch)}
-                    className={`group relative p-6 rounded-3xl border transition-all duration-300 cursor-pointer overflow-hidden ${
+                    className={`group relative p-6 rounded-[2rem] border transition-all duration-500 cursor-pointer overflow-hidden ${
                       isActive
-                        ? 'bg-gradient-to-r from-[#0E5BFF]/10 to-[#3B82F6]/5 shadow-[0_15px_35px_rgba(14,91,255,0.08)] border-[#0E5BFF]/35 scale-[1.01]'
-                        : 'bg-white/60 backdrop-blur-sm border-zinc-200/50 hover:bg-white/80 hover:border-zinc-300 shadow-sm'
+                        ? 'bg-gradient-to-br from-[#0E5BFF] to-[#1E40AF] text-white shadow-[0_20px_45px_rgba(14,91,255,0.22)] border-transparent scale-[1.01] z-10'
+                        : 'bg-white/70 backdrop-blur-sm border-zinc-200/55 hover:bg-white/95 hover:border-zinc-350 shadow-sm text-zinc-800'
                     }`}
                   >
                     {/* Header Row */}
                     <div className="flex justify-between items-center mb-3">
-                      <span className="font-inter text-[9px] text-zinc-400 font-bold flex items-center gap-1.5 uppercase tracking-wider">
-                        <Clock size={12} className="text-zinc-400" />
+                      <span className={`font-inter text-[9px] font-bold flex items-center gap-1.5 uppercase tracking-wider ${
+                        isActive ? "text-white/80" : "text-zinc-400"
+                      }`}>
+                        <Clock size={12} className={isActive ? "text-white/80" : "text-zinc-400"} />
                         {branch.hours}
                       </span>
                     </div>
 
                     {/* Branch Title */}
-                    <h3 className="font-editorial text-lg text-luxury-text-black font-black uppercase tracking-wide mb-2 group-hover:text-luxury-accent-blue transition-colors">
+                    <h3 className={`font-editorial text-xl font-black uppercase tracking-wide mb-2 transition-colors ${
+                      isActive ? "text-white" : "text-luxury-text-black group-hover:text-luxury-accent-blue"
+                    }`}>
                       {branch.name}
                     </h3>
                     
                     {/* Address details */}
-                    <p className="font-inter text-[11px] text-zinc-500 leading-relaxed mb-5 flex items-start gap-1.5">
-                      <MapPin size={14} className="text-zinc-400 mt-0.5 flex-shrink-0" />
+                    <p className={`font-inter text-[11px] leading-relaxed mb-5 flex items-start gap-1.5 ${
+                      isActive ? "text-white/85" : "text-zinc-500"
+                    }`}>
+                      <MapPin size={14} className={`mt-0.5 flex-shrink-0 ${isActive ? "text-white/80" : "text-zinc-400"}`} />
                       {branch.address}
                     </p>
 
@@ -202,7 +208,11 @@ export const Contact: React.FC = () => {
                     <div className="flex gap-3 mt-2" onClick={(e) => e.stopPropagation()}>
                       <a
                         href={`tel:${branch.phoneRaw}`}
-                        className="flex-1 py-2.5 rounded-full border border-luxury-text-black text-luxury-text-black hover:bg-luxury-text-black hover:text-white transition-all duration-300 font-inter text-[9px] tracking-widest uppercase font-bold text-center flex items-center justify-center gap-1.5 cursor-none bg-white/20 backdrop-blur-sm"
+                        className={`flex-1 py-2.5 rounded-full transition-all duration-300 font-inter text-[9px] tracking-widest uppercase font-bold text-center flex items-center justify-center gap-1.5 cursor-none ${
+                          isActive 
+                            ? "bg-white text-[#0E5BFF] hover:bg-zinc-100 shadow-md"
+                            : "border border-luxury-text-black text-luxury-text-black hover:bg-luxury-text-black hover:text-white bg-white/20 backdrop-blur-sm"
+                        }`}
                       >
                         <Phone size={10} />
                         Call
@@ -211,11 +221,32 @@ export const Contact: React.FC = () => {
                         href={branch.waLink}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex-1 py-2.5 rounded-full bg-gradient-to-r from-[#0E5BFF] to-[#3B82F6] text-white hover:shadow-[0_4px_12px_rgba(14,91,255,0.25)] transition-all duration-300 font-inter text-[9px] tracking-widest uppercase font-bold text-center flex items-center justify-center gap-1.5 cursor-none"
+                        className={`flex-1 py-2.5 rounded-full transition-all duration-300 font-inter text-[9px] tracking-widest uppercase font-bold text-center flex items-center justify-center gap-1.5 cursor-none ${
+                          isActive
+                            ? "bg-white/15 text-white hover:bg-white/25 border border-white/35"
+                            : "bg-gradient-to-r from-[#0E5BFF] to-[#3B82F6] text-white hover:shadow-[0_4px_12px_rgba(14,91,255,0.25)]"
+                        }`}
                       >
                         WhatsApp
                       </a>
                     </div>
+
+                    {/* Mobile Map View embedded directly inside the active card */}
+                    {isActive && (
+                      <div className="lg:hidden mt-5 w-full h-[250px] rounded-2xl overflow-hidden border border-white/25 shadow-inner relative z-10">
+                        <iframe
+                          title={`${branch.name} Mobile Map`}
+                          src={branch.mapEmbedUrl}
+                          width="100%"
+                          height="100%"
+                          style={{ border: 0 }}
+                          allowFullScreen={false}
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                          className="w-full h-full"
+                        />
+                      </div>
+                    )}
                   </motion.div>
                 );
               })}
@@ -223,7 +254,7 @@ export const Contact: React.FC = () => {
           </div>
 
           {/* Right: Embedded Live Map */}
-          <div className="col-span-1 lg:col-span-7 h-[350px] lg:h-auto min-h-[460px] rounded-[2rem] overflow-hidden border border-zinc-200/50 shadow-[0_20px_50px_rgba(14,91,255,0.12)] relative bg-white/80 backdrop-blur-sm z-10 flex flex-col items-stretch">
+          <div className="hidden lg:flex col-span-1 lg:col-span-7 h-[350px] lg:h-auto min-h-[460px] rounded-[2rem] overflow-hidden border border-zinc-200/50 shadow-[0_20px_50px_rgba(14,91,255,0.12)] relative bg-white/80 backdrop-blur-sm z-10 flex-col items-stretch">
             <div className="relative flex-1 w-full h-full min-h-[380px] rounded-[1.8rem] overflow-hidden border-2 border-white shadow-inner">
               <AnimatePresence mode="wait">
                 <motion.iframe

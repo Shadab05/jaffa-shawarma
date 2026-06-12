@@ -173,10 +173,10 @@ export const App: React.FC = () => {
                 100% { transform: translate3d(0, 0, 0); }
               }
               .animate-nav-wave-fast {
-                animation: nav-wave-flow-fast 12s linear infinite;
+                animation: nav-wave-flow-fast 48s linear infinite;
               }
               .animate-nav-wave-slow {
-                animation: nav-wave-flow-slow 18s linear infinite;
+                animation: nav-wave-flow-slow 72s linear infinite;
               }
             `}</style>
 
