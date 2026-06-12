@@ -156,133 +156,149 @@ export const Contact: React.FC = () => {
           </div>
         </div>
 
-        {/* Interactive Layout Sitting Directly on the Background (Open-Air columns) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 max-w-6xl mx-auto items-stretch relative">
-          
-          {/* Left: Branch Selector List */}
-          <div className="col-span-1 lg:col-span-5 flex flex-col gap-4 max-h-none lg:max-h-[600px] overflow-y-visible lg:overflow-y-auto pr-2 custom-scrollbar z-10">
+        {/* Interactive Book Accordion Layout */}
+        <div className="max-w-6xl mx-auto z-10 relative">
+          {/* Desktop/Mobile Accordion Row */}
+          <div className="flex flex-col lg:flex-row gap-6 items-stretch w-full justify-start overflow-visible pb-4">
             <AnimatePresence mode="popLayout">
-              {filteredBranches.map((branch) => {
+              {filteredBranches.map((branch, index) => {
                 const isActive = selectedBranch.id === branch.id;
+                const branchIndexStr = String(index + 1).padStart(2, '0');
+                
                 return (
                   <motion.div
                     layout
-                    initial={{ opacity: 0, y: 12 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.3 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 100, damping: 18 }}
                     key={branch.id}
                     onClick={() => setSelectedBranch(branch)}
-                    className={`group relative p-6 rounded-[2rem] border transition-all duration-500 cursor-pointer overflow-hidden ${
+                    className={`group relative rounded-[2.5rem] border transition-all duration-500 cursor-pointer overflow-hidden flex flex-col ${
                       isActive
-                        ? 'bg-gradient-to-br from-[#0E5BFF] to-[#1E40AF] text-white shadow-[0_20px_45px_rgba(14,91,255,0.22)] border-transparent scale-[1.01] z-10'
-                        : 'bg-white/70 backdrop-blur-sm border-zinc-200/55 hover:bg-white/95 hover:border-zinc-350 shadow-sm text-zinc-800'
-                    }`}
+                        ? 'bg-gradient-to-br from-[#0E5BFF] via-[#0D4EDC] to-[#1E40AF] text-white shadow-[0_25px_50px_rgba(14,91,255,0.25)] border-transparent lg:w-[620px] w-full z-10'
+                        : 'bg-white/75 backdrop-blur-sm border-zinc-200/55 hover:bg-white/95 hover:border-zinc-350 shadow-sm text-zinc-800 lg:w-[170px] w-full'
+                    } h-auto lg:h-[480px] p-6 lg:p-7 flex-shrink-0`}
                   >
-                    {/* Header Row */}
-                    <div className="flex justify-between items-center mb-3">
-                      <span className={`font-inter text-[9px] font-bold flex items-center gap-1.5 uppercase tracking-wider ${
-                        isActive ? "text-white/80" : "text-zinc-400"
+                    {/* Inner flex layout split when active */}
+                    <div className="flex flex-col lg:flex-row h-full w-full justify-between gap-6 items-stretch">
+                      
+                      {/* Left Side: "Book Cover / Spine" (visible in both states) */}
+                      <div className={`flex flex-col justify-between flex-shrink-0 transition-all duration-300 ${
+                        isActive ? 'lg:w-[220px] w-full border-b lg:border-b-0 lg:border-r border-white/20 pb-4 lg:pb-0 lg:pr-5' : 'w-full h-full'
                       }`}>
-                        <Clock size={12} className={isActive ? "text-white/80" : "text-zinc-400"} />
-                        {branch.hours}
-                      </span>
-                    </div>
+                        
+                        {/* Timings and Index */}
+                        <div className="flex justify-between items-center w-full">
+                          <span className={`font-inter text-[8px] font-extrabold flex items-center gap-1 uppercase tracking-wider ${
+                            isActive ? "text-white/80" : "text-zinc-400"
+                          }`}>
+                            <Clock size={10} />
+                            {isActive ? branch.hours.split(" - ")[0] : "TIMINGS"}
+                          </span>
+                          <span className={`font-editorial text-2xl font-black ${
+                            isActive ? "text-white/30" : "text-luxury-accent-blue/40 group-hover:text-luxury-accent-blue/70"
+                          }`}>
+                            {branchIndexStr}
+                          </span>
+                        </div>
 
-                    {/* Branch Title */}
-                    <h3 className={`font-editorial text-xl font-black uppercase tracking-wide mb-2 transition-colors ${
-                      isActive ? "text-white" : "text-luxury-text-black group-hover:text-luxury-accent-blue"
-                    }`}>
-                      {branch.name}
-                    </h3>
-                    
-                    {/* Address details */}
-                    <p className={`font-inter text-[11px] leading-relaxed mb-5 flex items-start gap-1.5 ${
-                      isActive ? "text-white/85" : "text-zinc-500"
-                    }`}>
-                      <MapPin size={14} className={`mt-0.5 flex-shrink-0 ${isActive ? "text-white/80" : "text-zinc-400"}`} />
-                      {branch.address}
-                    </p>
+                        {/* Title and Area */}
+                        <div className="my-6 lg:my-auto">
+                          <span className={`font-inter text-[9px] font-bold uppercase tracking-widest ${
+                            isActive ? "text-blue-200" : "text-zinc-400 group-hover:text-luxury-accent-blue/70"
+                          }`}>
+                            {branch.area}
+                          </span>
+                          <h3 className={`font-editorial text-xl lg:text-2xl font-black uppercase tracking-wide mt-1 leading-tight ${
+                            isActive ? "text-white" : "text-luxury-text-black group-hover:text-luxury-accent-blue"
+                          } ${!isActive && 'lg:rotate-180 lg:[writing-mode:vertical-lr] lg:mx-auto lg:mt-6 lg:my-0'}`}>
+                            {branch.name.replace("Jaffa ", "")}
+                          </h3>
+                        </div>
 
-                    {/* Direct Actions inside card */}
-                    <div className="flex gap-3 mt-2" onClick={(e) => e.stopPropagation()}>
-                      <a
-                        href={`tel:${branch.phoneRaw}`}
-                        className={`flex-1 py-2.5 rounded-full transition-all duration-300 font-inter text-[9px] tracking-widest uppercase font-bold text-center flex items-center justify-center gap-1.5 cursor-none ${
-                          isActive 
-                            ? "bg-white text-[#0E5BFF] hover:bg-zinc-100 shadow-md"
-                            : "border border-luxury-text-black text-luxury-text-black hover:bg-luxury-text-black hover:text-white bg-white/20 backdrop-blur-sm"
-                        }`}
-                      >
-                        <Phone size={10} />
-                        Call
-                      </a>
-                      <a
-                        href={branch.waLink}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={`flex-1 py-2.5 rounded-full transition-all duration-300 font-inter text-[9px] tracking-widest uppercase font-bold text-center flex items-center justify-center gap-1.5 cursor-none ${
-                          isActive
-                            ? "bg-white/15 text-white hover:bg-white/25 border border-white/35"
-                            : "bg-gradient-to-r from-[#0E5BFF] to-[#3B82F6] text-white hover:shadow-[0_4px_12px_rgba(14,91,255,0.25)]"
-                        }`}
-                      >
-                        WhatsApp
-                      </a>
-                    </div>
-
-                    {/* Mobile Map View embedded directly inside the active card */}
-                    {isActive && (
-                      <div className="lg:hidden mt-5 w-full h-[250px] rounded-2xl overflow-hidden border border-white/25 shadow-inner relative z-10">
-                        <iframe
-                          title={`${branch.name} Mobile Map`}
-                          src={branch.mapEmbedUrl}
-                          width="100%"
-                          height="100%"
-                          style={{ border: 0 }}
-                          allowFullScreen={false}
-                          loading="lazy"
-                          referrerPolicy="no-referrer-when-downgrade"
-                          className="w-full h-full"
-                        />
+                        {/* Store Phone Details */}
+                        <div className="mt-auto pt-2">
+                          <span className={`font-inter text-[8px] tracking-widest uppercase block ${
+                            isActive ? "text-white/60" : "text-zinc-400"
+                          }`}>
+                            STORE CALL
+                          </span>
+                          <a 
+                            href={`tel:${branch.phoneRaw}`} 
+                            onClick={(e) => e.stopPropagation()}
+                            className={`font-mono text-[11px] font-bold block mt-1 hover:underline cursor-none ${
+                              isActive ? "text-white" : "text-luxury-text-charcoal"
+                            }`}
+                          >
+                            {branch.phone}
+                          </a>
+                        </div>
                       </div>
-                    )}
+
+                      {/* Right Side: "Book Pages" (Map & Address, fades in when active) */}
+                      {isActive && (
+                        <motion.div
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.15, duration: 0.3 }}
+                          className="flex-1 flex flex-col justify-between h-full gap-4 relative z-10 w-full"
+                        >
+                          {/* Timings full view on active */}
+                          <div className="flex items-center gap-1.5 font-inter text-[9px] text-white/80 uppercase tracking-widest">
+                            <Clock size={11} className="text-blue-300" />
+                            Timings: {branch.hours}
+                          </div>
+
+                          {/* Address details */}
+                          <p className="font-inter text-[11px] leading-relaxed text-white/90 flex items-start gap-2">
+                            <MapPin size={14} className="mt-0.5 flex-shrink-0 text-blue-300" />
+                            {branch.address}
+                          </p>
+
+                          {/* Embedded Live Map */}
+                          <div className="w-full flex-1 min-h-[200px] rounded-2xl overflow-hidden border border-white/20 shadow-inner relative z-10">
+                            <iframe
+                              title={`${branch.name} Map Page`}
+                              src={branch.mapEmbedUrl}
+                              width="100%"
+                              height="100%"
+                              style={{ border: 0 }}
+                              allowFullScreen={false}
+                              loading="lazy"
+                              referrerPolicy="no-referrer-when-downgrade"
+                              className="w-full h-full"
+                              onClick={(e) => e.stopPropagation()}
+                            />
+                          </div>
+
+                          {/* Action Buttons inside Page */}
+                          <div className="flex gap-3 mt-1" onClick={(e) => e.stopPropagation()}>
+                            <a
+                              href={`tel:${branch.phoneRaw}`}
+                              className="flex-1 py-2.5 rounded-full bg-white text-[#0E5BFF] hover:bg-zinc-100 transition-all duration-300 font-inter text-[9px] tracking-widest uppercase font-bold text-center flex items-center justify-center gap-1.5 cursor-none shadow-md"
+                            >
+                              <Phone size={10} />
+                              Call Outlet
+                            </a>
+                            <a
+                              href={branch.waLink}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="flex-1 py-2.5 rounded-full bg-white/15 text-white hover:bg-white/25 border border-white/35 transition-all duration-300 font-inter text-[9px] tracking-widest uppercase font-bold text-center flex items-center justify-center gap-1.5 cursor-none"
+                            >
+                              Order via WA
+                            </a>
+                          </div>
+                        </motion.div>
+                      )}
+
+                    </div>
                   </motion.div>
                 );
               })}
             </AnimatePresence>
           </div>
-
-          {/* Right: Embedded Live Map */}
-          <div className="hidden lg:flex col-span-1 lg:col-span-7 h-[350px] lg:h-auto min-h-[460px] rounded-[2rem] overflow-hidden border border-zinc-200/50 shadow-[0_20px_50px_rgba(14,91,255,0.12)] relative bg-white/80 backdrop-blur-sm z-10 flex-col items-stretch">
-            <div className="relative flex-1 w-full h-full min-h-[380px] rounded-[1.8rem] overflow-hidden border-2 border-white shadow-inner">
-              <AnimatePresence mode="wait">
-                <motion.iframe
-                  key={selectedBranch.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4 }}
-                  title={selectedBranch.name}
-                  src={selectedBranch.mapEmbedUrl}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen={false}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="w-full h-full"
-                />
-              </AnimatePresence>
-            </div>
-            
-            {/* Ambient Map overlay tag */}
-            <div className="absolute bottom-4 left-4 bg-luxury-text-black/85 backdrop-blur-sm px-4 py-2.5 rounded-2xl text-white font-inter text-[9px] tracking-wider uppercase font-bold flex items-center gap-1.5 shadow-md pointer-events-none">
-              <MapPin size={11} className="text-luxury-accent-blue" />
-              Viewing {selectedBranch.name} Map
-            </div>
-          </div>
-
         </div>
 
       </div>
