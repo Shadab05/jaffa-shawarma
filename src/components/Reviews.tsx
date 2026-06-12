@@ -76,7 +76,7 @@ export const Reviews: React.FC = () => {
           Because they are in the same container, they stack on top of each other
           and remain stacked until the entire section is scrolled past.
       ─────────────────────────────────────────────────────────────── */}
-      <div className="md:hidden px-5 relative z-10 pb-[320px]">
+      <div className="md:hidden px-5 relative z-10 pb-[40px]">
         {REVIEWS.slice(0, 6).map((review, index) => (
           <div
             key={review.id}
