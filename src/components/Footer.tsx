@@ -97,7 +97,7 @@ export const Footer: React.FC = () => {
             Order on Swiggy
           </a>
           <a 
-            href="https://www.zomato.com/bhopal/restaurants?q=Jaffa+Shawarma" 
+            href="https://www.zomato.com/bhopal/jaffa-shawarma-arera-colony" 
             target="_blank" 
             rel="noreferrer"
             className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#CB192E]/10 text-[#CB192E] hover:bg-[#CB192E] hover:text-white transition-all duration-300 border border-[#CB192E]/20 font-inter text-[10px] tracking-wider uppercase font-bold cursor-none"

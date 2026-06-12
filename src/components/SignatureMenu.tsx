@@ -140,12 +140,16 @@ const MenuCard: React.FC<{ item: MenuItem }> = ({ item }) => {
         </span>
       )}
 
-      {/* Floating Info trigger in top-right for Nutrition */}
+      {/* Floating Nutrition facts trigger */}
       <button
         onClick={() => setShowNutrition(!showNutrition)}
-        className="absolute top-6 right-6 w-8 h-8 rounded-full bg-white/15 backdrop-blur-md hover:bg-luxury-accent-blue text-white flex items-center justify-center border border-white/20 transition-all duration-300 z-20 text-[9px] tracking-wider uppercase font-bold cursor-none"
+        className={`absolute top-6 right-6 px-3 py-1.5 rounded-full font-inter text-[8px] tracking-widest uppercase font-extrabold transition-all duration-350 z-20 border cursor-none ${
+          showNutrition
+            ? "bg-luxury-accent-blue text-white border-transparent"
+            : "bg-white/10 backdrop-blur-md hover:bg-white/25 text-white border-white/20"
+        }`}
       >
-        {showNutrition ? "X" : "i"}
+        {showNutrition ? "Close" : "Nutrition"}
       </button>
 
       {/* Card Content Overlay */}
@@ -216,7 +220,7 @@ const MenuCard: React.FC<{ item: MenuItem }> = ({ item }) => {
               Swiggy
             </a>
             <a
-              href="https://www.zomato.com/bhopal/restaurants?q=Jaffa+Shawarma"
+              href="https://www.zomato.com/bhopal/jaffa-shawarma-arera-colony"
               target="_blank"
               rel="noreferrer"
               className="flex-1 py-2.5 bg-[#CB192E] hover:bg-[#A81021] text-white font-inter text-[9px] tracking-widest uppercase font-bold text-center flex items-center justify-center gap-1.5 cursor-none rounded-full shadow-[0_4px_12px_rgba(203,25,46,0.2)] transition-all duration-300"
@@ -275,25 +279,34 @@ export const SignatureMenu: React.FC = () => {
 
         {/* Horizontal Hovering Carousel Wrapper */}
         <div className="relative max-w-6xl mx-auto px-4 group/carousel">
-          {/* Scroll Buttons - Absolute overlay visible on container hover */}
+          {/* Scroll Buttons - Always visible on desktop */}
           <button
             onClick={() => scroll('left')}
-            className="absolute left-[-20px] top-[50%] -translate-y-1/2 w-12 h-12 rounded-full bg-white/85 backdrop-blur-md border border-zinc-200 shadow-xl flex items-center justify-center text-luxury-text-charcoal hover:bg-luxury-accent-blue hover:text-white hover:border-transparent transition-all duration-300 z-30 cursor-none opacity-0 group-hover/carousel:opacity-100 hidden md:flex"
+            className="absolute left-[-24px] top-[50%] -translate-y-1/2 w-12 h-12 rounded-full bg-white border border-zinc-200 shadow-xl flex items-center justify-center text-luxury-text-charcoal hover:bg-luxury-accent-blue hover:text-white hover:border-transparent transition-all duration-300 z-30 cursor-none hidden md:flex"
           >
             <ChevronLeft size={20} />
           </button>
           
           <button
             onClick={() => scroll('right')}
-            className="absolute right-[-20px] top-[50%] -translate-y-1/2 w-12 h-12 rounded-full bg-white/85 backdrop-blur-md border border-zinc-200 shadow-xl flex items-center justify-center text-luxury-text-charcoal hover:bg-luxury-accent-blue hover:text-white hover:border-transparent transition-all duration-300 z-30 cursor-none opacity-0 group-hover/carousel:opacity-100 hidden md:flex"
+            className="absolute right-[-24px] top-[50%] -translate-y-1/2 w-12 h-12 rounded-full bg-white border border-zinc-200 shadow-xl flex items-center justify-center text-luxury-text-charcoal hover:bg-luxury-accent-blue hover:text-white hover:border-transparent transition-all duration-300 z-30 cursor-none hidden md:flex"
           >
             <ChevronRight size={20} />
           </button>
 
           {/* Snap scroll container */}
+          <style>{`
+            .no-scrollbar::-webkit-scrollbar {
+              display: none !important;
+            }
+          `}</style>
           <div
             ref={scrollContainerRef}
-            className="flex gap-8 overflow-x-auto pb-8 pt-2 scrollbar-hide snap-x snap-mandatory scroll-smooth"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+            className="flex gap-8 overflow-x-auto pb-8 pt-2 scrollbar-hide no-scrollbar snap-x snap-mandatory scroll-smooth bg-transparent"
           >
             {MENU_ITEMS.map((item) => (
               <div key={item.id} className="snap-center flex-shrink-0 w-[290px] md:w-[340px]">
