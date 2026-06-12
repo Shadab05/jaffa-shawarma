@@ -71,57 +71,46 @@ export const Reviews: React.FC = () => {
       </div>
 
       {/* ── MOBILE: CSS Sticky Stack ──────────────────────────────────
-          Each card has a WRAPPER with height = scroll-travel distance.
-          Inside it the card is `position:sticky; top:108px` so it
-          stays pinned while the user scrolls through the wrapper height.
-          The next wrapper starts right after, so next card slides over.
-          No gap — the wrapper height equals how much you scroll per card.
+          All cards are siblings in the same parent container with position: sticky.
+          Each card pins at a slightly staggered top offset.
+          Because they are in the same container, they stack on top of each other
+          and remain stacked until the entire section is scrolled past.
       ─────────────────────────────────────────────────────────────── */}
-      <div className="md:hidden px-5 relative z-10">
-        {REVIEWS.slice(0, 6).map((review, index, arr) => (
+      <div className="md:hidden px-5 relative z-10 pb-[320px]">
+        {REVIEWS.slice(0, 6).map((review, index) => (
           <div
             key={review.id}
             style={{
-              // All wrappers except the last have a scroll-travel height.
-              // 28vh gives ~236px on a 844px-tall phone — snug and clean
-              // for stacking without huge gaps.
-              height: index < arr.length - 1 ? '28vh' : 'auto',
-              position: 'relative',
+              position: 'sticky',
+              top: `${80 + index * 16}px`, // staggered top to create the book stack effect
+              zIndex: index + 1,           // later cards sit on top of earlier ones
             }}
+            className="mb-6 last:mb-0"
           >
-            <div
-              style={{
-                position: 'sticky',
-                top: '108px',          // all cards pin at identical y — true stacking
-                zIndex: index + 1,     // later cards sit ON TOP of earlier ones
-              }}
-            >
-              <div className="bg-gradient-to-br from-[#0E5BFF] to-[#1E40AF] text-white rounded-[2rem] px-6 py-6 border border-white/10 shadow-[0_14px_35px_rgba(14,91,255,0.28)] relative overflow-hidden">
-                <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/5 rounded-full blur-xl pointer-events-none" />
-                <Quote className="absolute right-5 top-5 w-6 h-6 text-white/10 pointer-events-none" />
-                <div className="relative z-10">
-                  <div className="flex gap-1 mb-3 text-amber-300">
-                    {Array.from({ length: review.rating }).map((_, i) => (
-                      <Star key={i} size={12} className="fill-amber-300 text-amber-300" />
-                    ))}
-                  </div>
-                  <p className="font-inter text-[11px] text-white/90 leading-relaxed italic pr-6 mb-4">
-                    "{review.text}"
-                  </p>
-                  <div className="border-t border-white/15 pt-3 flex justify-between items-center">
-                    <span className="font-editorial text-[11px] font-black text-white uppercase tracking-wider">
-                      {review.name}
-                    </span>
-                    <span className="font-inter text-[8px] text-white/70 uppercase tracking-widest font-extrabold">
-                      {review.location}
-                    </span>
-                  </div>
+            <div className="bg-gradient-to-br from-[#0E5BFF] to-[#1E40AF] text-white rounded-[2rem] px-6 py-6 border border-white/10 shadow-[0_14px_35px_rgba(14,91,255,0.28)] relative overflow-hidden">
+              <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/5 rounded-full blur-xl pointer-events-none" />
+              <Quote className="absolute right-5 top-5 w-6 h-6 text-white/10 pointer-events-none" />
+              <div className="relative z-10">
+                <div className="flex gap-1 mb-3 text-amber-300">
+                  {Array.from({ length: review.rating }).map((_, i) => (
+                    <Star key={i} size={12} className="fill-amber-300 text-amber-300" />
+                  ))}
+                </div>
+                <p className="font-inter text-[11px] text-white/90 leading-relaxed italic pr-6 mb-4">
+                  "{review.text}"
+                </p>
+                <div className="border-t border-white/15 pt-3 flex justify-between items-center">
+                  <span className="font-editorial text-[11px] font-black text-white uppercase tracking-wider">
+                    {review.name}
+                  </span>
+                  <span className="font-inter text-[8px] text-white/70 uppercase tracking-widest font-extrabold">
+                    {review.location}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         ))}
-        <div style={{ height: '2rem' }} />
       </div>
 
       {/* ── DESKTOP: 3D Rotating Cylinder ─────────────────────────── */}
