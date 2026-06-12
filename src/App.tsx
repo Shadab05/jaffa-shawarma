@@ -24,13 +24,29 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Repeating geometric SVG latticework panel for Navbar background (Islamic star mesh/mashrabiya)
 const LatticeworkPatternNavbar: React.FC = () => (
-  <svg className="absolute inset-0 w-full h-full opacity-[0.15] pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+  <svg className="absolute inset-0 w-full h-full opacity-[0.14] pointer-events-none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <pattern id="lattice-nav" width="30" height="30" patternUnits="userSpaceOnUse">
-        <path d="M15 0 L30 15 L15 30 L0 15 Z" fill="none" stroke="#0E5BFF" strokeWidth="1" />
-        <path d="M0 0 L30 30 M30 0 L0 30" fill="none" stroke="#0E5BFF" strokeWidth="0.5" />
-        <circle cx="15" cy="15" r="6" fill="none" stroke="#0E5BFF" strokeWidth="0.8" />
-        <rect x="10" y="10" width="10" height="10" fill="none" stroke="#0E5BFF" strokeWidth="0.5" transform="rotate(45 15 15)" />
+      <pattern id="lattice-nav" width="60" height="60" patternUnits="userSpaceOnUse">
+        {/* Subtle grid border */}
+        <rect width="60" height="60" fill="none" stroke="#0E5BFF" strokeWidth="0.2" opacity="0.3" />
+        {/* Main outer diamond */}
+        <path d="M30 0 L60 30 L30 60 L0 30 Z" fill="none" stroke="#0E5BFF" strokeWidth="0.5" />
+        {/* Vertical and horizontal grid lines */}
+        <path d="M30 0 L30 60 M0 30 L60 30" fill="none" stroke="#0E5BFF" strokeWidth="0.3" />
+        {/* Diagonal grid lines */}
+        <path d="M0 0 L60 60 M60 0 L0 60" fill="none" stroke="#0E5BFF" strokeWidth="0.3" />
+        {/* Sharp 8-Pointed Star in center */}
+        <path d="M30 8 L24 24 L8 30 L24 36 L30 52 L36 36 L52 30 L36 24 Z" fill="none" stroke="#0E5BFF" strokeWidth="0.6" />
+        {/* Intersecting squares to form the star center */}
+        <rect x="20" y="20" width="20" height="20" fill="none" stroke="#0E5BFF" strokeWidth="0.4" />
+        <rect x="20" y="20" width="20" height="20" fill="none" stroke="#0E5BFF" strokeWidth="0.4" transform="rotate(45 30 30)" />
+        {/* Concentric circles in centers */}
+        <circle cx="30" cy="30" r="5" fill="none" stroke="#0E5BFF" strokeWidth="0.5" />
+        {/* Corner details */}
+        <circle cx="0" cy="0" r="4" fill="none" stroke="#0E5BFF" strokeWidth="0.4" />
+        <circle cx="60" cy="0" r="4" fill="none" stroke="#0E5BFF" strokeWidth="0.4" />
+        <circle cx="0" cy="60" r="4" fill="none" stroke="#0E5BFF" strokeWidth="0.4" />
+        <circle cx="60" cy="60" r="4" fill="none" stroke="#0E5BFF" strokeWidth="0.4" />
       </pattern>
     </defs>
     <rect width="100%" height="100%" fill="url(#lattice-nav)" />
@@ -164,20 +180,8 @@ export const App: React.FC = () => {
               }
             `}</style>
 
-            {/* Rectangular Header Background (minus wave height) */}
-            <div 
-              className={`absolute inset-x-0 top-0 bottom-8 transition-all duration-500 z-0 overflow-hidden ${
-                isScrolled && !mobileMenuOpen
-                  ? 'bg-luxury-bg-ivory/95 backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.05)]'
-                  : 'bg-luxury-bg-ivory/45 backdrop-blur-[6px]'
-              }`}
-            >
-              {/* Latticework background pattern inside the rectangular background */}
-              <LatticeworkPatternNavbar />
-            </div>
-
-            {/* Flowing Waves at the bottom of the rectangular background */}
-            <div className="absolute left-0 right-0 bottom-0 w-full h-8 overflow-hidden z-0 pointer-events-none">
+            {/* Flowing Waves and Background (Unified h-full container) */}
+            <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
               
               {/* Layer 1: Back Wave (flowing) */}
               <div className="absolute inset-0 w-[200%] h-full flex animate-nav-wave-slow opacity-60">
@@ -205,7 +209,7 @@ export const App: React.FC = () => {
                 </div>
               </div>
 
-              {/* Layer 2: Front Wave (flowing, matches main rect background and includes the mesh pattern) */}
+              {/* Layer 2: Front Wave (flowing, spanning entire height, containing opaque background blur and the high-fidelity star pattern) */}
               <div className="absolute inset-0 w-[200%] h-full flex animate-nav-wave-fast">
                 <div 
                   className="w-1/2 h-full flex-shrink-0 relative overflow-hidden -mr-[1px]"
@@ -214,8 +218,10 @@ export const App: React.FC = () => {
                     WebkitClipPath: 'url(#wave-clip-front)'
                   }}
                 >
-                  <div className={`absolute inset-0 transition-colors duration-500 ${
-                    isScrolled && !mobileMenuOpen ? 'bg-luxury-bg-ivory/95' : 'bg-luxury-bg-ivory/45'
+                  <div className={`absolute inset-0 transition-all duration-500 ${
+                    isScrolled && !mobileMenuOpen 
+                      ? 'bg-luxury-bg-ivory/95 backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.05)]' 
+                      : 'bg-luxury-bg-ivory/45 backdrop-blur-[6px]'
                   }`} />
                   <LatticeworkPatternNavbar />
                 </div>
@@ -226,8 +232,10 @@ export const App: React.FC = () => {
                     WebkitClipPath: 'url(#wave-clip-front)'
                   }}
                 >
-                  <div className={`absolute inset-0 transition-colors duration-500 ${
-                    isScrolled && !mobileMenuOpen ? 'bg-luxury-bg-ivory/95' : 'bg-luxury-bg-ivory/45'
+                  <div className={`absolute inset-0 transition-all duration-500 ${
+                    isScrolled && !mobileMenuOpen 
+                      ? 'bg-luxury-bg-ivory/95 backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.05)]' 
+                      : 'bg-luxury-bg-ivory/45 backdrop-blur-[6px]'
                   }`} />
                   <LatticeworkPatternNavbar />
                 </div>

@@ -85,6 +85,7 @@ export const VideoScroller: React.FC = () => {
     // Desktop mode: Scrub the video.currentTime based on scroll progress
     const initScrollTrigger = (duration: number) => {
       video.currentTime = 0;
+      video.pause();
 
       let targetTime = 0;
       let currentTime = 0;
@@ -167,10 +168,11 @@ export const VideoScroller: React.FC = () => {
           src="assets/Hero scroller video.mp4"
           muted
           playsInline
-          autoPlay={isMobile}
-          loop={isMobile}
+          autoPlay
+          loop
           preload="auto"
-          className="w-full h-full object-cover opacity-85 scale-[1.18] origin-top select-none pointer-events-none"
+          poster="assets/hero section video replacer after scroll.png"
+          className="w-full h-full object-cover opacity-85 scale-100 md:scale-[1.18] origin-top select-none pointer-events-none"
         />
 
         {/* Persistent bottom gradient mask to cover the bottom watermark and blend edges */}

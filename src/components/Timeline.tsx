@@ -79,87 +79,134 @@ export const Timeline: React.FC = () => {
           </p>
         </div>
 
-        {/* Process Showcase Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch max-w-6xl mx-auto">
+        {/* Horizontal Journey Timeline Line */}
+        <div className="relative flex justify-between items-center max-w-4xl mx-auto mb-20 px-4">
+          {/* Base Gray Connection Line */}
+          <div className="absolute left-6 right-6 top-1/2 -translate-y-1/2 h-[3px] bg-zinc-200/60 rounded-full z-0" />
           
-          {/* Interactive Steps list (Left Side - 5 Columns) */}
-          <div className="lg:col-span-5 flex flex-col gap-4 justify-start">
-            {STEPS.map((step, index) => {
-              const isActive = activeTab === index;
-              return (
-                <button
-                  key={step.num}
-                  onClick={() => setActiveTab(index)}
-                  className={`w-full text-left rounded-2xl p-5 border transition-all duration-300 flex flex-col justify-between cursor-none ${
-                    isActive 
-                      ? 'bg-gradient-to-r from-[#0E5BFF] to-[#3B82F6] text-white border-transparent shadow-[0_12px_30px_rgba(14,91,255,0.25)] scale-[1.01]'
-                      : 'bg-white/40 border-zinc-200/50 text-luxury-text-black hover:bg-white/75 hover:border-blue-500/20 shadow-sm'
+          {/* Active Sliding Progress Blue Line */}
+          <motion.div 
+            className="absolute left-6 top-1/2 -translate-y-1/2 h-[3px] bg-gradient-to-r from-[#0E5BFF] to-[#3B82F6] rounded-full z-0"
+            initial={{ width: "0%" }}
+            animate={{ width: `${(activeTab / (STEPS.length - 1)) * 98}%` }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          />
+
+          {/* Nodes */}
+          {STEPS.map((step, index) => {
+            const isActive = activeTab === index;
+            const isCompleted = index < activeTab;
+            
+            return (
+              <button
+                key={step.num}
+                onClick={() => setActiveTab(index)}
+                className="relative z-10 flex flex-col items-center cursor-none focus:outline-none group"
+              >
+                {/* Node circle */}
+                <motion.div
+                  className={`w-11 h-11 rounded-full flex items-center justify-center font-editorial font-bold text-xs transition-all duration-300 border-[3px] ${
+                    isActive
+                      ? 'bg-gradient-to-br from-[#0E5BFF] to-[#3B82F6] text-white border-white shadow-[0_0_20px_rgba(14,91,255,0.4)] scale-110'
+                      : isCompleted
+                        ? 'bg-blue-50 text-luxury-accent-blue border-luxury-accent-blue/40'
+                        : 'bg-white text-zinc-400 border-zinc-200'
                   }`}
+                  whileHover={{ scale: 1.15 }}
                 >
-                  <div className="flex justify-between items-center w-full mb-2">
-                    <span className={`font-mono text-[9px] tracking-wider uppercase px-2.5 py-0.5 rounded-full font-bold ${
-                      isActive ? 'bg-white/20 text-white' : 'bg-zinc-150 text-luxury-accent-blue'
-                    }`}>
-                      Step {step.num}
-                    </span>
-                    <span className={`font-mono text-[9px] tracking-wider uppercase ${
-                      isActive ? 'text-blue-100' : 'text-zinc-400'
-                    }`}>
-                      {step.duration}
-                    </span>
-                  </div>
+                  {step.num}
+                </motion.div>
 
-                  <h3 className="font-editorial text-base md:text-lg tracking-wide uppercase font-black mb-2">
-                    {step.title}
-                  </h3>
+                {/* Vertical floating line for active step */}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeIndicator"
+                    className="absolute top-12 w-[2px] h-4 bg-luxury-accent-blue/30"
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                  />
+                )}
 
-                  {/* Accordion content: description is visible on active */}
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.p
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="font-inter text-xs text-blue-50/90 leading-relaxed mt-2"
-                      >
-                        {step.description}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-                </button>
-              );
-            })}
-          </div>
+                {/* Horizontal journey text label below the node */}
+                <span className={`absolute top-16 font-inter text-[9px] md:text-[10px] tracking-widest uppercase font-extrabold transition-all duration-300 whitespace-nowrap hidden sm:block ${
+                  isActive ? 'text-luxury-accent-blue scale-105' : 'text-zinc-400 group-hover:text-zinc-500'
+                }`}>
+                  {step.title.split(' ')[0]} {step.title.split(' ')[1] || ''}
+                </span>
+              </button>
+            );
+          })}
+        </div>
 
-          {/* Interactive Viewport Showcase (Right Side - 7 Columns) */}
-          <div className="lg:col-span-7 flex items-center justify-center">
+        {/* Split Screen Active Showcase */}
+        <div className="max-w-5xl mx-auto mt-12 sm:mt-24">
+          <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="w-full rounded-[32px] p-4 bg-white/40 backdrop-blur-xl border border-white/50 shadow-[0_20px_50px_rgba(0,0,0,0.04)] h-[380px] md:h-[480px] flex items-center justify-center overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white/40 backdrop-blur-xl border border-white/50 rounded-[32px] p-6 md:p-10 shadow-[0_30px_70px_rgba(14,91,255,0.06)]"
             >
-              {STEPS[activeTab].type === 'video' ? (
-                <video
-                  src={STEPS[activeTab].asset}
-                  loop
-                  muted
-                  playsInline
-                  autoPlay
-                  className="w-full h-full object-cover rounded-2xl shadow-md"
-                />
-              ) : (
-                <img
-                  src={STEPS[activeTab].asset}
-                  alt={STEPS[activeTab].title}
-                  className="w-full h-full object-cover rounded-2xl shadow-md"
-                />
-              )}
-            </motion.div>
-          </div>
+              
+              {/* Detailed description column (5 Columns) */}
+              <div className="lg:col-span-5 flex flex-col justify-center text-left">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="font-mono text-[9px] tracking-wider uppercase font-black text-white bg-luxury-accent-blue px-3 py-1 rounded-full shadow-[0_4px_10px_rgba(14,91,255,0.2)]">
+                    Stage {STEPS[activeTab].num}
+                  </span>
+                  <span className="font-mono text-[9px] tracking-wider uppercase text-luxury-accent-goldglow bg-amber-500/10 px-3 py-1 rounded-full font-black">
+                    {STEPS[activeTab].duration}
+                  </span>
+                </div>
 
+                <h3 className="font-editorial text-2xl md:text-3xl tracking-wide uppercase font-black text-luxury-text-black mb-4 leading-tight">
+                  {STEPS[activeTab].title}
+                </h3>
+
+                <p className="font-inter text-xs md:text-sm text-zinc-600 leading-relaxed mb-8">
+                  {STEPS[activeTab].description}
+                </p>
+
+                {/* Quality checkpoints */}
+                <div className="border-t border-zinc-200/60 pt-6 flex gap-6">
+                  <div>
+                    <h5 className="font-editorial text-[9px] tracking-wider uppercase text-zinc-400 font-extrabold">Quality Standard</h5>
+                    <p className="font-inter text-xs text-luxury-text-charcoal font-bold mt-1">100% Authentic Lebanese</p>
+                  </div>
+                  <div className="w-[1px] h-8 bg-zinc-200/50" />
+                  <div>
+                    <h5 className="font-editorial text-[9px] tracking-wider uppercase text-zinc-400 font-extrabold">Assembly Type</h5>
+                    <p className="font-inter text-xs text-luxury-text-charcoal font-bold mt-1">Artisanal Handcrafted</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Video/Image viewport showcase column (7 Columns) */}
+              <div className="lg:col-span-7 h-[280px] md:h-[420px] rounded-[24px] overflow-hidden relative shadow-2xl group border border-white/40">
+                {STEPS[activeTab].type === 'video' ? (
+                  <video
+                    src={STEPS[activeTab].asset}
+                    loop
+                    muted
+                    playsInline
+                    autoPlay
+                    className="w-full h-full object-cover brightness-[0.95] group-hover:scale-[1.03] transition-transform duration-700"
+                  />
+                ) : (
+                  <img
+                    src={STEPS[activeTab].asset}
+                    alt={STEPS[activeTab].title}
+                    className="w-full h-full object-cover brightness-[0.95] group-hover:scale-[1.03] transition-transform duration-700"
+                  />
+                )}
+                
+                {/* Subtle overlay shading */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+              </div>
+
+            </motion.div>
+          </AnimatePresence>
         </div>
 
       </div>

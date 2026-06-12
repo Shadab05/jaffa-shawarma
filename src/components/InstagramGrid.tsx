@@ -18,56 +18,56 @@ interface Reel {
 const REELS: Reel[] = [
   {
     id: 1,
-    videoUrl: "/assets/reels/reel_1.mp4",
-    thumbnailUrl: "/assets/reels/reel_1_thumb.jpg",
+    videoUrl: "assets/reels/reel_1.mp4",
+    thumbnailUrl: "assets/reels/reel_1_thumb.jpg",
     likes: "4.8K",
     comments: "142",
     caption: "The golden spit JAFFA SHAWARMA cooking to perfection. Sizzling layers of spice and pure flavor."
   },
   {
     id: 2,
-    videoUrl: "/assets/reels/reel_2.mp4",
-    thumbnailUrl: "/assets/reels/reel_2_thumb.jpg",
+    videoUrl: "assets/reels/reel_2.mp4",
+    thumbnailUrl: "assets/reels/reel_2_thumb.jpg",
     likes: "6.2K",
     comments: "284",
     caption: "Our signature garlic toum lathered onto fresh Lebanese flatbread. Hand-rolled with passion."
   },
   {
     id: 3,
-    videoUrl: "/assets/reels/reel_3.mp4",
-    thumbnailUrl: "/assets/reels/reel_3_thumb.jpg",
+    videoUrl: "assets/reels/reel_3.mp4",
+    thumbnailUrl: "assets/reels/reel_3_thumb.jpg",
     likes: "3.9K",
     comments: "98",
     caption: "Succulent chicken shavings fresh off the rotisserie grill. True culinary craftsmanship."
   },
   {
     id: 4,
-    videoUrl: "/assets/reels/reel_4.mp4",
-    thumbnailUrl: "/assets/reels/reel_4_thumb.jpg",
+    videoUrl: "assets/reels/reel_4.mp4",
+    thumbnailUrl: "assets/reels/reel_4_thumb.jpg",
     likes: "5.5K",
     comments: "189",
     caption: "Every wrap is a masterpiece. Crispy pickles, toasted crust, and our secret spice blend."
   },
   {
     id: 5,
-    videoUrl: "/assets/reels/reel_5.mp4",
-    thumbnailUrl: "/assets/reels/reel_5_thumb.jpg",
+    videoUrl: "assets/reels/reel_5.mp4",
+    thumbnailUrl: "assets/reels/reel_5_thumb.jpg",
     likes: "7.1K",
     comments: "310",
     caption: "Step into Jaffa Shawarma. Experience the authentic taste of the Middle East, crafted locally."
   },
   {
     id: 6,
-    videoUrl: "/assets/reels/reel_6.mp4",
-    thumbnailUrl: "/assets/reels/reel_6_thumb.jpg",
+    videoUrl: "assets/reels/reel_6.mp4",
+    thumbnailUrl: "assets/reels/reel_6_thumb.jpg",
     likes: "5.9K",
     comments: "223",
     caption: "The satisfying sizzle of fresh chicken pressed to perfection. Golden, crispy, and incredibly juicy."
   },
   {
     id: 7,
-    videoUrl: "/assets/reels/reel_7.mp4",
-    thumbnailUrl: "/assets/reels/reel_7_thumb.jpg",
+    videoUrl: "assets/reels/reel_7.mp4",
+    thumbnailUrl: "assets/reels/reel_7_thumb.jpg",
     likes: "8.4K",
     comments: "412",
     caption: "Gather around for the ultimate shawarma feast. A sensory journey of aromatics and spices."
