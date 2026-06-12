@@ -220,8 +220,8 @@ export const App: React.FC = () => {
                 >
                   <div className={`absolute inset-0 transition-all duration-500 ${
                     isScrolled && !mobileMenuOpen 
-                      ? 'bg-luxury-bg-ivory/95 backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.05)]' 
-                      : 'bg-luxury-bg-ivory/45 backdrop-blur-[6px]'
+                      ? 'bg-white/95 backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.05)]' 
+                      : 'bg-white/45 backdrop-blur-[6px]'
                   }`} />
                   <LatticeworkPatternNavbar />
                 </div>
@@ -234,8 +234,8 @@ export const App: React.FC = () => {
                 >
                   <div className={`absolute inset-0 transition-all duration-500 ${
                     isScrolled && !mobileMenuOpen 
-                      ? 'bg-luxury-bg-ivory/95 backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.05)]' 
-                      : 'bg-luxury-bg-ivory/45 backdrop-blur-[6px]'
+                      ? 'bg-white/95 backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.05)]' 
+                      : 'bg-white/45 backdrop-blur-[6px]'
                   }`} />
                   <LatticeworkPatternNavbar />
                 </div>
@@ -272,16 +272,16 @@ export const App: React.FC = () => {
 
               {/* Centered 2D Cursive Neon Logo (Absolute, bleeding out with back-glow) */}
               <div 
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 hover:scale-105 z-50 w-[180px] md:w-[240px] h-[90px]" 
+                className="absolute left-1/2 top-[42%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 hover:scale-105 z-50 w-[180px] md:w-[240px] h-[90px]" 
                 onClick={() => {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
               >
                 {/* Back-lit glow shadow for logo */}
                 <div className="absolute w-[120px] md:w-[160px] h-[35px] md:h-[45px] bg-[#0E5BFF]/35 blur-xl rounded-full pointer-events-none z-0" />
-                <div className="relative z-10 flex flex-col items-center justify-center pt-1 leading-none select-none pointer-events-none">
+                <div className="relative z-10 flex flex-col items-center justify-center pt-2 select-none pointer-events-none">
                   <span 
-                    className="font-normal text-4xl md:text-5xl text-white drop-shadow-[0_0_12px_rgba(14,91,255,0.8)] filter pr-1.5"
+                    className="font-normal text-4xl md:text-5xl text-white drop-shadow-[0_0_12px_rgba(14,91,255,0.8)] filter pr-1.5 leading-[1.15]"
                     style={{
                       fontFamily: "'Pacifico', cursive",
                       textShadow: '0 0 10px rgba(14, 91, 255, 0.95), 0 0 20px rgba(14, 91, 255, 0.75), 0 0 35px rgba(59, 130, 246, 0.6)',
@@ -289,7 +289,7 @@ export const App: React.FC = () => {
                   >
                     jaffa
                   </span>
-                  <span className="font-inter text-[#0E5BFF] font-extrabold uppercase text-[8px] md:text-[9px] tracking-[0.55em] mt-0.5 ml-[0.55em] leading-none drop-shadow-[0_0_5px_rgba(14,91,255,0.3)]">
+                  <span className="font-inter text-[#0E5BFF] font-extrabold uppercase text-[8px] md:text-[9px] tracking-[0.55em] mt-0.5 ml-[0.55em] drop-shadow-[0_0_5px_rgba(14,91,255,0.3)]">
                     SHAWARMA
                   </span>
                 </div>
@@ -342,9 +342,10 @@ export const App: React.FC = () => {
                   className="px-3.5 py-2 rounded-full bg-[#CB192E] text-white flex items-center justify-center gap-1.5 cursor-none hover:scale-105 transition-all duration-300 shadow-md font-inter text-[8px] tracking-widest uppercase font-bold"
                   title="Order on Zomato"
                 >
-                  <svg viewBox="0 0 24 24" className="w-10 h-3.5 fill-white" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19.615 9.45l-1.258.473-.167.71-.446.021-.115.978h.408l-.211 1.51c-.131.939.036 1.381.865 1.381.488 0 .91-.175 1.135-.297l.145-.9c-.167.083-.436.19-.618.19-.247 0-.276-.13-.225-.488l.189-1.396h.843c.03-.206.131-.877.16-1h-.865zm-3.779 1.002c-.115.002-.236.01-.361.026a3.592 3.592 0 0 0-1.347.432l.26.789c.269-.15.615-.28.978-.326.538-.066.757.1.79.375.014.109.004.199-.005.289l-.014.056a3.46 3.46 0 0 0-1.097-.036c-.518.063-.943.273-1.204.6a1.324 1.324 0 0 0-.225 1.034c.127.583.553.84 1.199.76.45-.055.812-.27 1.076-.63a2.665 2.665 0 0 1-.03.304 1.74 1.74 0 0 1-.072.29l1.244.001a3.657 3.657 0 0 1-.001-.365c.036-.459.118-1.143.247-2.051a2.397 2.397 0 0 0-.002-.59c-.08-.644-.628-.969-1.436-.958zm6.536.063c-1.194 0-2.107 1.067-2.107 2.342 0 .959.552 1.693 1.628 1.693 1.2 0 2.107-1.067 2.107-2.35 0-.95-.538-1.685-1.628-1.685zm-11.777.041c-.538 0-1.12.465-1.52 1.236.102-.504.08-1.076.051-1.198a8.964 8.964 0 0 1-1.287.122 6.9 6.9 0 0 1-.073 1.243l-.167 1.145c-.066.45-.138.969-.211 1.297h1.353c.007-.199.058-.511.094-.786l.116-.786c.095-.511.502-1.114.815-1.114.182 0 .175.176.124.504l-.131.885c-.066.45-.138.969-.211 1.297h1.367c.008-.199.051-.512.088-.786l.116-.786c.094-.512.502-1.114.814-1.114.182 0 .175.168.146.396l-.327 2.29H13l.438-2.609c.095-.649.044-1.236-.676-1.236-.523 0-1.09.443-1.49 1.182.087-.61.036-1.182-.677-1.182zm-4.88.008c-1.177 0-2.08 1.053-2.08 2.312 0 .946.546 1.67 1.608 1.67 1.185 0 2.08-1.052 2.08-2.319 0-.938-.531-1.663-1.607-1.663zm-5.126.091c-.05.39-.102.778-.175 1.13.328-.008.619-.016 1.411-.016l-1.81 1.96-.015.703c.444-.03.997-.039 1.63-.039.566 0 1.134.008 1.497.039.065-.458.13-.763.21-1.137-.275.015-.755.023-1.512.023l1.81-1.969.023-.694c-.437.023-.83.03-1.52.03-.749 0-.975-.007-1.549-.03zm4.988.927c.255 0 .408.228.408.701 0 .687-.276 1.251-.626 1.251-.261 0-.414-.236-.414-.702 0-.694.283-1.25.632-1.25zm16.629 0c.254 0 .407.228.407.701 0 .687-.276 1.251-.625 1.251-.262 0-.415-.236-.415-.702 0-.694.284-1.25.633-1.25zM15.51 12.64c.206-.003.403.024.55.058l-.013.118c-.075.44-.39.881-.848.938-.31.037-.578-.148-.608-.39a.538.538 0 0 1 .114-.41c.117-.159.336-.268.599-.3.069-.009.138-.013.206-.014z"/>
+                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                   </svg>
+                  <span>Zomato</span>
                 </a>
               </div>
 
@@ -368,7 +369,7 @@ export const App: React.FC = () => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="fixed inset-0 z-[998] bg-luxury-bg-ivory flex flex-col justify-center items-center gap-5 lg:hidden h-screen w-screen relative overflow-hidden"
+                className="fixed inset-0 z-[998] bg-white flex flex-col justify-center items-center gap-5 lg:hidden h-screen w-screen relative overflow-hidden"
               >
                 {/* Flowing background geometric star patterns for luxury feel */}
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
@@ -427,8 +428,8 @@ export const App: React.FC = () => {
                       rel="noreferrer"
                       className="flex-1 py-3 bg-[#CB192E] text-white font-inter text-[10px] tracking-[0.2em] uppercase rounded-full shadow-md font-bold text-center cursor-none flex items-center justify-center gap-1.5"
                     >
-                      <svg viewBox="0 0 24 24" className="w-9 h-3.5 fill-white" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M19.615 9.45l-1.258.473-.167.71-.446.021-.115.978h.408l-.211 1.51c-.131.939.036 1.381.865 1.381.488 0 .91-.175 1.135-.297l.145-.9c-.167.083-.436.19-.618.19-.247 0-.276-.13-.225-.488l.189-1.396h.843c.03-.206.131-.877.16-1h-.865zm-3.779 1.002c-.115.002-.236.01-.361.026a3.592 3.592 0 0 0-1.347.432l.26.789c.269-.15.615-.28.978-.326.538-.066.757.1.79.375.014.109.004.199-.005.289l-.014.056a3.46 3.46 0 0 0-1.097-.036c-.518.063-.943.273-1.204.6a1.324 1.324 0 0 0-.225 1.034c.127.583.553.84 1.199.76.45-.055.812-.27 1.076-.63a2.665 2.665 0 0 1-.03.304 1.74 1.74 0 0 1-.072.29l1.244.001a3.657 3.657 0 0 1-.001-.365c.036-.459.118-1.143.247-2.051a2.397 2.397 0 0 0-.002-.59c-.08-.644-.628-.969-1.436-.958zm6.536.063c-1.194 0-2.107 1.067-2.107 2.342 0 .959.552 1.693 1.628 1.693 1.2 0 2.107-1.067 2.107-2.35 0-.95-.538-1.685-1.628-1.685zm-11.777.041c-.538 0-1.12.465-1.52 1.236.102-.504.08-1.076.051-1.198a8.964 8.964 0 0 1-1.287.122 6.9 6.9 0 0 1-.073 1.243l-.167 1.145c-.066.45-.138.969-.211 1.297h1.353c.007-.199.058-.511.094-.786l.116-.786c.095-.511.502-1.114.815-1.114.182 0 .175.176.124.504l-.131.885c-.066.45-.138.969-.211 1.297h1.367c.008-.199.051-.512.088-.786l.116-.786c.094-.512.502-1.114.814-1.114.182 0 .175.168.146.396l-.327 2.29H13l.438-2.609c.095-.649.044-1.236-.676-1.236-.523 0-1.09.443-1.49 1.182.087-.61.036-1.182-.677-1.182zm-4.88.008c-1.177 0-2.08 1.053-2.08 2.312 0 .946.546 1.67 1.608 1.67 1.185 0 2.08-1.052 2.08-2.319 0-.938-.531-1.663-1.607-1.663zm-5.126.091c-.05.39-.102.778-.175 1.13.328-.008.619-.016 1.411-.016l-1.81 1.96-.015.703c.444-.03.997-.039 1.63-.039.566 0 1.134.008 1.497.039.065-.458.13-.763.21-1.137-.275.015-.755.023-1.512.023l1.81-1.969.023-.694c-.437.023-.83.03-1.52.03-.749 0-.975-.007-1.549-.03zm4.988.927c.255 0 .408.228.408.701 0 .687-.276 1.251-.626 1.251-.261 0-.414-.236-.414-.702 0-.694.283-1.25.632-1.25zm16.629 0c.254 0 .407.228.407.701 0 .687-.276 1.251-.625 1.251-.262 0-.415-.236-.415-.702 0-.694.284-1.25.633-1.25zM15.51 12.64c.206-.003.403.024.55.058l-.013.118c-.075.44-.39.881-.848.938-.31.037-.578-.148-.608-.39a.538.538 0 0 1 .114-.41c.117-.159.336-.268.599-.3.069-.009.138-.013.206-.014z"/>
+                      <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                       </svg>
                       Zomato
                     </a>
@@ -467,7 +468,7 @@ export const App: React.FC = () => {
             onExploreClick={() => scrollToSection('menu')}
           />
           <VideoScroller />
-          <div className="relative bg-luxury-bg-ivory">
+          <div className="relative bg-white">
             <OurStory />
             <SignatureMenu />
             <Timeline />

@@ -116,12 +116,12 @@ export const Reviews: React.FC = () => {
         
         gsap.to(card, {
           scale: 1 - cardsRemaining * 0.05, // progress scale down
-          opacity: 0.3,
-          yPercent: -15 * cardsRemaining,
+          opacity: 0.25,
+          yPercent: -12 * cardsRemaining,
           scrollTrigger: {
             trigger: trigger,
             start: "top 130px",
-            end: "bottom 130px",
+            end: "bottom 450px",
             scrub: true,
             invalidateOnRefresh: true,
           }
@@ -139,10 +139,10 @@ export const Reviews: React.FC = () => {
     setRotationY((prev) => direction === 'left' ? prev - angle : prev + angle);
   };
 
-  const radius = 480; // Radius of 3D cylinder in pixels
+  const radius = 380; // Radius of 3D cylinder in pixels
 
   return (
-    <section id="reviews" ref={containerRef} className="relative py-24 md:py-32 overflow-hidden z-20 bg-luxury-bg-ivory/35 border-t border-zinc-150">
+    <section id="reviews" ref={containerRef} className="relative py-24 md:py-32 overflow-hidden z-20 bg-white">
       {/* Background decorations */}
       <div className="absolute top-1/2 left-0 w-[450px] h-[450px] bg-luxury-accent-blue/5 rounded-full blur-[130px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[130px] pointer-events-none" />
@@ -168,13 +168,13 @@ export const Reviews: React.FC = () => {
           {REVIEWS.map((review, index) => (
             <div 
               key={review.id} 
-              className="testimonial-card-trigger h-[320px] w-full relative"
+              className="testimonial-card-trigger h-[450px] w-full relative"
               style={{
                 zIndex: index + 10
               }}
             >
               <div 
-                className="testimonial-card bg-gradient-to-br from-[#0E5BFF] to-[#1E40AF] text-white rounded-[2.5rem] p-8 border border-white/10 shadow-[0_20px_45px_rgba(14,91,255,0.22)] w-full h-full flex flex-col justify-between sticky top-[140px]"
+                className="testimonial-card bg-gradient-to-br from-[#0E5BFF] to-[#1E40AF] text-white rounded-[2.5rem] p-8 border border-white/10 shadow-[0_20px_45px_rgba(14,91,255,0.22)] w-full h-[320px] flex flex-col justify-between sticky top-[130px]"
               >
                 <Quote className="absolute right-8 top-8 w-8 h-8 text-white/10 pointer-events-none" />
                 <div className="relative z-10">
@@ -202,7 +202,7 @@ export const Reviews: React.FC = () => {
         </div>
 
         {/* --- DESKTOP VIEW: 3D Spiral Cylinder Carousel --- */}
-        <div className="hidden md:flex flex-col items-center justify-center h-[520px] relative w-full perspective-1000 z-10">
+        <div className="hidden md:flex flex-col items-center justify-center h-[600px] relative w-full perspective-1000 z-10">
           
           {/* Navigation Controls */}
           <button
@@ -223,7 +223,7 @@ export const Reviews: React.FC = () => {
 
           {/* 3D Carousel Stage */}
           <div 
-            className="relative w-[340px] h-[340px] transition-transform duration-500 ease-out"
+            className="relative w-[320px] h-[400px] transition-transform duration-500 ease-out"
             style={{
               transform: "rotateX(-5deg)", // slight tilt for better 3D depth
               transformStyle: "preserve-3d"

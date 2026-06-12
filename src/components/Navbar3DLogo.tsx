@@ -18,9 +18,9 @@ export const Navbar3DLogo: React.FC<Navbar3DLogoProps> = ({ variant = 'navbar' }
     const isNavbar = variant === 'navbar';
     const width = isNavbar ? 240 : 340;
     const height = isNavbar ? 75 : 105;
-    const modelScale = isNavbar ? 1.5 : 2.1;
-    const cameraY = isNavbar ? 0.1 : 0.12;
-    const cameraZ = isNavbar ? 4.4 : 4.6;
+    const modelScale = isNavbar ? 1.25 : 1.75;
+    const cameraY = isNavbar ? 0.05 : 0.08;
+    const cameraZ = isNavbar ? 4.8 : 5.0;
 
     // Scene
     const scene = new THREE.Scene();

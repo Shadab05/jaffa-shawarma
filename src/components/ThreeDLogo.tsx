@@ -19,7 +19,7 @@ export const ThreeDLogo: React.FC = () => {
 
     // 2. Create Camera (Optimized scale to prevent Y clipping)
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
-    camera.position.set(0, 0, 6.2);
+    camera.position.set(0, 0, 6.4);
 
     // 3. Create WebGL Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -137,7 +137,7 @@ export const ThreeDLogo: React.FC = () => {
         model.position.sub(center);
 
         // Scale Adjustments (Optimized scale to prevent cutoff)
-        model.scale.set(2.2, 2.2, 2.2);
+        model.scale.set(1.8, 1.8, 1.8);
 
         // Add to scene within a rotator group
         const wrapper = new THREE.Group();

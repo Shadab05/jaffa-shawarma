@@ -142,7 +142,7 @@ export const InstagramGrid: React.FC = () => {
   return (
     <section id="social" className="relative z-20">
       {/* Trigger container for pinning */}
-      <div ref={triggerRef} className="relative w-full bg-[#f8f7f4]">
+      <div ref={triggerRef} className="relative w-full bg-white">
         
         {/* Sticky viewport content - centered vertically */}
         <div className="relative h-screen w-full flex flex-col justify-center overflow-hidden py-8">

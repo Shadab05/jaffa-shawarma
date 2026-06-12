@@ -180,7 +180,7 @@ export const VideoScroller: React.FC = () => {
 
         {/* WaveDivider to transition from dark scroller to white OurStory */}
         <div className="absolute bottom-0 left-0 right-0 z-30">
-          <WaveDivider height="h-16" backWaveColor="text-[#0E5BFF]/10" frontWaveColor="text-[#F8FAFF]" backWaveOpacity={0.4} />
+          <WaveDivider height="h-16" backWaveColor="text-[#0E5BFF]/10" frontWaveColor="text-white" backWaveOpacity={0.4} />
         </div>
 
         {/* Cinematic Vignettes */}

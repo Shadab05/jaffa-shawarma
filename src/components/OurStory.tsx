@@ -49,7 +49,7 @@ export const OurStory: React.FC = () => {
   }, []);
 
   return (
-    <section id="story" className="relative py-24 md:py-32 overflow-hidden z-20 pb-36 bg-luxury-bg-ivory">
+    <section id="story" className="relative py-24 md:py-32 overflow-hidden z-20 pb-36 bg-white">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
@@ -198,7 +198,7 @@ export const OurStory: React.FC = () => {
       </div>
 
       {/* WaveDivider separating OurStory from SignatureMenu */}
-      <WaveDivider height="h-16" backWaveColor="text-[#0E5BFF]/5" frontWaveColor="text-[#F8FAFF]" backWaveOpacity={0.4} />
+      <WaveDivider height="h-16" backWaveColor="text-[#0E5BFF]/5" frontWaveColor="text-white" backWaveOpacity={0.4} />
     </section>
   );
 };
