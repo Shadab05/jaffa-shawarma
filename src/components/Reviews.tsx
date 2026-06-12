@@ -47,10 +47,12 @@ export const Reviews: React.FC = () => {
   const radius = 380; // wider cylinder — cards properly spaced apart
 
   return (
-    <section id="reviews" className="relative bg-white z-20 py-24 md:py-32 overflow-hidden">
-      {/* Background decorations */}
-      <div className="absolute top-1/2 left-0 w-[450px] h-[450px] bg-luxury-accent-blue/5 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[130px] pointer-events-none" />
+    <section id="reviews" className="relative bg-white z-20 py-24 md:py-32">
+      {/* Background decorations wrapped to prevent horizontal overflow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/2 left-0 w-[450px] h-[450px] bg-luxury-accent-blue/5 rounded-full blur-[130px]" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[130px]" />
+      </div>
 
       {/* ── Section Header ── */}
       <div className="container mx-auto px-6 relative z-10">
@@ -81,9 +83,9 @@ export const Reviews: React.FC = () => {
             key={review.id}
             style={{
               // All wrappers except the last have a scroll-travel height.
-              // 38vh gives ~320px on a 844px-tall phone — enough to feel
-              // like "scrolling through" the card before the next appears.
-              height: index < arr.length - 1 ? '38vh' : 'auto',
+              // 28vh gives ~236px on a 844px-tall phone — snug and clean
+              // for stacking without huge gaps.
+              height: index < arr.length - 1 ? '28vh' : 'auto',
               position: 'relative',
             }}
           >
@@ -124,7 +126,7 @@ export const Reviews: React.FC = () => {
 
       {/* ── DESKTOP: 3D Rotating Cylinder ─────────────────────────── */}
       <div
-        className="hidden md:flex flex-col items-center justify-center h-[500px] relative w-full z-10"
+        className="hidden md:flex flex-col items-center justify-center h-[410px] relative w-full z-10"
         style={{ perspective: '1200px' }}
       >
         {/* Arrow nav */}
@@ -147,7 +149,7 @@ export const Reviews: React.FC = () => {
         <div
           style={{
             width: '240px',
-            height: '300px',
+            height: '210px',
             transformStyle: 'preserve-3d',
             transform: 'rotateX(-5deg)',
           }}
