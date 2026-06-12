@@ -1,7 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import BackgroundParticles from './BackgroundParticles';
-import WaveDivider from './WaveDivider';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface MenuItem {
@@ -152,7 +150,7 @@ const MenuCard: React.FC<{ item: MenuItem }> = ({ item }) => {
         backfaceVisibility: 'hidden',
         WebkitBackfaceVisibility: 'hidden',
       }}
-      className="relative rounded-[2.5rem] bg-zinc-950 border border-zinc-800 shadow-[0_20px_50px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_60px_rgba(14,91,255,0.22)] transition-all duration-500 flex flex-col justify-end overflow-hidden group cursor-none h-[520px] w-full"
+      className="relative rounded-[2.5rem] bg-zinc-950 border border-zinc-800 shadow-[0_12px_30px_rgba(0,0,0,0.15)] hover:shadow-[0_18px_40px_rgba(14,91,255,0.18)] transition-all duration-500 flex flex-col justify-end overflow-hidden group cursor-none h-[520px] w-full"
     >
       {/* Background full-height photo */}
       <div className="absolute inset-0 z-0">
@@ -292,12 +290,9 @@ export const SignatureMenu: React.FC = () => {
   };
 
   return (
-    <section id="menu" className="relative py-24 md:py-32 overflow-hidden z-20">
-      {/* Background drifting smoke particles */}
-      <BackgroundParticles />
-      {/* Background decorations */}
-      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] blue-glow-radial opacity-60 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] amber-glow-radial opacity-50 pointer-events-none" />
+    <section id="menu" className="relative py-24 md:py-32 overflow-x-hidden z-20 bg-white">
+
+
 
       <div className="container mx-auto px-6">
         
@@ -344,10 +339,10 @@ export const SignatureMenu: React.FC = () => {
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
             }}
-            className="flex gap-8 overflow-x-auto pb-8 pt-2 scrollbar-hide no-scrollbar snap-x snap-mandatory scroll-smooth bg-transparent"
+            className="flex gap-5 overflow-x-auto pb-10 pt-2 scrollbar-hide no-scrollbar snap-x snap-mandatory scroll-smooth bg-white"
           >
             {MENU_ITEMS.map((item) => (
-              <div key={item.id} className="snap-center flex-shrink-0 w-[290px] md:w-[340px]">
+              <div key={item.id} className="snap-center flex-shrink-0 w-[280px] md:w-[290px] xl:w-[calc(25%-15px)]">
                 <MenuCard item={item} />
               </div>
             ))}
@@ -356,8 +351,7 @@ export const SignatureMenu: React.FC = () => {
 
       </div>
 
-      {/* WaveDivider separating SignatureMenu from Timeline */}
-      <WaveDivider height="h-16" backWaveColor="text-[#0E5BFF]/5" frontWaveColor="text-white" backWaveOpacity={0.4} />
+
     </section>
   );
 };

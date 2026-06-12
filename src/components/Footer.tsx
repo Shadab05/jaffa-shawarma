@@ -138,7 +138,7 @@ export const Footer: React.FC = () => {
           <a href="#story" className="hover:text-luxury-accent-blue transition-colors cursor-none">Our Story</a>
           <a href="#menu" className="hover:text-luxury-accent-blue transition-colors cursor-none">Menu</a>
           <a href="#journey" className="hover:text-luxury-accent-blue transition-colors cursor-none">Gallery</a>
-          <a href="#outlets" className="hover:text-luxury-accent-blue transition-colors cursor-none">Kitchens</a>
+          <a href="#outlets" className="hover:text-luxury-accent-blue transition-colors cursor-none">Outlets</a>
           <a href="#social" className="hover:text-luxury-accent-blue transition-colors cursor-none">Journal</a>
         </div>
 

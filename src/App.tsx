@@ -140,17 +140,7 @@ export const App: React.FC = () => {
     <>
       <CustomCursor />
 
-      {/* SVG clip-path definitions for the flowing waves in Navbar */}
-      <svg width="0" height="0" className="absolute pointer-events-none" style={{ position: 'absolute', width: 0, height: 0 }}>
-        <defs>
-          <clipPath id="wave-clip-front" clipPathUnits="objectBoundingBox">
-            <path d="M0,0.85 C0.0833,0.65 0.1667,1 0.25,0.85 C0.3333,0.65 0.4167,1 0.5,0.85 C0.5833,0.65 0.6667,1 0.75,0.85 C0.8333,0.65 0.9167,1 1,0.85 L1,0 L0,0 Z" />
-          </clipPath>
-          <clipPath id="wave-clip-back" clipPathUnits="objectBoundingBox">
-            <path d="M0,0.75 C0.0833,0.5 0.1667,0.95 0.25,0.75 C0.3333,0.5 0.4167,0.95 0.5,0.75 C0.5833,0.5 0.6667,0.95 0.75,0.75 C0.8333,0.5 0.9167,0.95 1,0.75 L1,0 L0,0 Z" />
-          </clipPath>
-        </defs>
-      </svg>
+
 
       {/* Industrial Shutter preloader */}
       {!isLoaded ? (
@@ -160,122 +150,59 @@ export const App: React.FC = () => {
           
           {/* Floating Premium Header / Navbar */}
           {/* Floating Premium Header / Navbar */}
-          <nav className={`fixed top-0 left-0 right-0 z-[999] transition-all duration-500 flex items-center ${
-            isScrolled && !mobileMenuOpen ? 'h-24' : 'h-32'
-          }`}>
-            <style>{`
-              @keyframes nav-wave-flow-fast {
-                0% { transform: translate3d(0, 0, 0); }
-                100% { transform: translate3d(-50%, 0, 0); }
-              }
-              @keyframes nav-wave-flow-slow {
-                0% { transform: translate3d(-50%, 0, 0); }
-                100% { transform: translate3d(0, 0, 0); }
-              }
-              .animate-nav-wave-fast {
-                animation: nav-wave-flow-fast 48s linear infinite;
-              }
-              .animate-nav-wave-slow {
-                animation: nav-wave-flow-slow 72s linear infinite;
-              }
-            `}</style>
-
-            {/* Flowing Waves and Background (Unified h-full container) */}
-            <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-              
-              {/* Layer 1: Back Wave (flowing) */}
-              <div className="absolute inset-0 w-[200%] h-full flex animate-nav-wave-slow opacity-60">
-                <div 
-                  className="w-1/2 h-full flex-shrink-0 relative overflow-hidden -mr-[1px]"
-                  style={{
-                    clipPath: 'url(#wave-clip-back)',
-                    WebkitClipPath: 'url(#wave-clip-back)'
-                  }}
-                >
-                  <div className={`absolute inset-0 transition-colors duration-500 ${
-                    isScrolled && !mobileMenuOpen ? 'bg-[#0E5BFF]/15' : 'bg-[#0E5BFF]/5'
-                  }`} />
-                </div>
-                <div 
-                  className="w-1/2 h-full flex-shrink-0 relative overflow-hidden"
-                  style={{
-                    clipPath: 'url(#wave-clip-back)',
-                    WebkitClipPath: 'url(#wave-clip-back)'
-                  }}
-                >
-                  <div className={`absolute inset-0 transition-colors duration-500 ${
-                    isScrolled && !mobileMenuOpen ? 'bg-[#0E5BFF]/15' : 'bg-[#0E5BFF]/5'
-                  }`} />
-                </div>
-              </div>
-
-              {/* Layer 2: Front Wave (flowing, spanning entire height, containing opaque background blur and the high-fidelity star pattern) */}
-              <div className="absolute inset-0 w-[200%] h-full flex animate-nav-wave-fast">
-                <div 
-                  className="w-1/2 h-full flex-shrink-0 relative overflow-hidden -mr-[1px]"
-                  style={{
-                    clipPath: 'url(#wave-clip-front)',
-                    WebkitClipPath: 'url(#wave-clip-front)'
-                  }}
-                >
-                  <div className={`absolute inset-0 transition-all duration-500 ${
-                    isScrolled && !mobileMenuOpen 
-                      ? 'bg-white/95 backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.05)]' 
-                      : 'bg-white/45 backdrop-blur-[6px]'
-                  }`} />
-                  <LatticeworkPatternNavbar />
-                </div>
-                <div 
-                  className="w-1/2 h-full flex-shrink-0 relative overflow-hidden"
-                  style={{
-                    clipPath: 'url(#wave-clip-front)',
-                    WebkitClipPath: 'url(#wave-clip-front)'
-                  }}
-                >
-                  <div className={`absolute inset-0 transition-all duration-500 ${
-                    isScrolled && !mobileMenuOpen 
-                      ? 'bg-white/95 backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.05)]' 
-                      : 'bg-white/45 backdrop-blur-[6px]'
-                  }`} />
-                  <LatticeworkPatternNavbar />
-                </div>
-              </div>
-
+          <nav className={`fixed top-0 left-0 right-0 z-[999] transition-all duration-300 flex items-center h-[68px]`}>
+            {/* Flat solid navbar background with subtle latticework */}
+            <div className={`absolute inset-0 w-full h-full z-0 pointer-events-none transition-all duration-300 ${
+              isScrolled && !mobileMenuOpen
+                ? 'bg-white shadow-[0_2px_20px_rgba(0,0,0,0.10)] border-b border-zinc-100'
+                : 'bg-white/96 shadow-[0_1px_8px_rgba(0,0,0,0.06)] border-b border-zinc-100/70'
+            }`}>
+              <LatticeworkPatternNavbar />
             </div>
 
             <div className="container mx-auto px-6 relative flex items-center justify-between w-full h-full">
               
-              {/* Left links for Desktop */}
-              <div className="hidden lg:flex gap-6 xl:gap-8 justify-start items-center w-1/3">
+              {/* Left links for Desktop — all 5 nav items */}
+              <div className="hidden lg:flex gap-5 xl:gap-7 justify-start items-center w-1/2">
                 <button 
                   onClick={() => scrollToSection('story')} 
-                  className="font-inter text-[9px] tracking-[0.25em] uppercase text-luxury-text-charcoal hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
+                  className="font-inter text-[11px] tracking-[0.15em] uppercase text-luxury-text-charcoal hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
                 >
                   Our Story
                 </button>
                 <button 
                   onClick={() => scrollToSection('menu')} 
-                  className="font-inter text-[9px] tracking-[0.25em] uppercase text-luxury-text-charcoal hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
+                  className="font-inter text-[11px] tracking-[0.15em] uppercase text-luxury-text-charcoal hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
                 >
                   Menu
                 </button>
                 <button 
                   onClick={() => scrollToSection('journey')} 
-                  className="font-inter text-[9px] tracking-[0.25em] uppercase text-luxury-text-charcoal hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
+                  className="font-inter text-[11px] tracking-[0.15em] uppercase text-luxury-text-charcoal hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
                 >
                   Gallery
+                </button>
+                <button 
+                  onClick={() => scrollToSection('outlets')} 
+                  className="font-inter text-[11px] tracking-[0.15em] uppercase text-luxury-text-charcoal hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
+                >
+                  Outlets
+                </button>
+                <button 
+                  onClick={() => scrollToSection('social')} 
+                  className="font-inter text-[11px] tracking-[0.15em] uppercase text-luxury-text-charcoal hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
+                >
+                  Journal
                 </button>
               </div>
 
               {/* Left spacer on Mobile */}
               <div className="lg:hidden w-1/3" />
 
-              {/* Centered 2D Cursive Neon Logo (Absolute, bleeding out with back-glow) */}
+              {/* Centered Logo — truly vertically centered in flat navbar */}
               <div 
-                className="absolute left-1/2 top-[42%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 hover:scale-105 z-50 w-[180px] md:w-[240px] h-[90px]" 
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 hover:scale-105 z-50 w-[160px] md:w-[220px]" 
+                onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               >
                 {/* Back-lit glow shadow for logo */}
                 <div className="absolute w-[120px] md:w-[160px] h-[35px] md:h-[45px] bg-[#0E5BFF]/35 blur-xl rounded-full pointer-events-none z-0" />
@@ -295,20 +222,8 @@ export const App: React.FC = () => {
                 </div>
               </div>
 
-              {/* Right Links & Direct Contact for Desktop */}
-              <div className="hidden lg:flex gap-4 xl:gap-5 justify-end items-center w-1/3">
-                <button 
-                  onClick={() => scrollToSection('outlets')} 
-                  className="font-inter text-[9px] tracking-[0.25em] uppercase text-luxury-text-charcoal hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
-                >
-                  Kitchens
-                </button>
-                <button 
-                  onClick={() => scrollToSection('social')} 
-                  className="font-inter text-[9px] tracking-[0.25em] uppercase text-luxury-text-charcoal hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
-                >
-                  Journal
-                </button>
+              {/* Right: Order Buttons only */}
+              <div className="hidden lg:flex gap-4 xl:gap-5 justify-end items-center w-1/2">
                 
                 {/* Direct WhatsApp Call - Jaffa Blue Gradient */}
                 <a 
@@ -369,7 +284,7 @@ export const App: React.FC = () => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="fixed inset-0 z-[998] bg-white flex flex-col justify-center items-center gap-5 lg:hidden h-screen w-screen relative overflow-hidden"
+                className="fixed inset-0 z-[998] bg-white flex flex-col justify-center items-center gap-5 lg:hidden"
               >
                 {/* Flowing background geometric star patterns for luxury feel */}
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
@@ -398,7 +313,7 @@ export const App: React.FC = () => {
                   onClick={() => { scrollToSection('outlets'); setMobileMenuOpen(false); }} 
                   className="font-editorial text-2xl tracking-[0.2em] uppercase text-luxury-text-black hover:text-luxury-accent-blue transition-colors font-bold cursor-none"
                 >
-                  Kitchens
+                  Outlets
                 </button>
                 <button 
                   onClick={() => { scrollToSection('social'); setMobileMenuOpen(false); }} 
