@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
@@ -8,9 +8,17 @@ interface Navbar3DLogoProps {
 
 export const Navbar3DLogo: React.FC<Navbar3DLogoProps> = ({ variant = 'navbar' }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const checkMobile = () => {
+      return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 768;
+    };
+    setIsMobile(checkMobile());
+  }, []);
+
+  useEffect(() => {
+    if (isMobile || !containerRef.current) return;
 
     const container = containerRef.current;
     
@@ -29,7 +37,7 @@ export const Navbar3DLogo: React.FC<Navbar3DLogoProps> = ({ variant = 'navbar' }
     const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 50);
     camera.position.set(0, cameraY, cameraZ);
 
-    // Renderer
+    // Renderer (optimized for desktop)
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -86,20 +94,12 @@ export const Navbar3DLogo: React.FC<Navbar3DLogoProps> = ({ variant = 'navbar' }
       }
     );
 
-    // Mouse & Touch sway tracking
+    // Mouse sway tracking
     const mouse = { x: 0, targetX: 0 };
     const onMouseMove = (event: MouseEvent) => {
       mouse.targetX = (event.clientX / window.innerWidth) * 2 - 1;
     };
-    const onTouchMove = (event: TouchEvent) => {
-      if (event.touches.length > 0) {
-        const touch = event.touches[0];
-        mouse.targetX = (touch.clientX / window.innerWidth) * 2 - 1;
-      }
-    };
     window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('touchstart', onTouchMove, { passive: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: true });
 
     // Animation Loop
     let animationFrameId: number;
@@ -119,8 +119,6 @@ export const Navbar3DLogo: React.FC<Navbar3DLogoProps> = ({ variant = 'navbar' }
 
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('touchstart', onTouchMove);
-      window.removeEventListener('touchmove', onTouchMove);
       cancelAnimationFrame(animationFrameId);
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
@@ -142,9 +140,40 @@ export const Navbar3DLogo: React.FC<Navbar3DLogoProps> = ({ variant = 'navbar' }
         });
       }
     };
-  }, [variant]);
+  }, [variant, isMobile]);
 
   const isNavbar = variant === 'navbar';
+
+  if (isMobile) {
+    return (
+      <div className="flex flex-col items-center justify-center select-none pointer-events-none">
+        {/* 2D Neon Cursive Fallback for Mobile */}
+        <div 
+          style={{ width: isNavbar ? '240px' : '340px', height: isNavbar ? '75px' : '105px' }}
+          className="flex items-center justify-center relative"
+        >
+          {/* Back-lit glow shadow for logo */}
+          <div className={`absolute bg-[#0E5BFF]/35 blur-xl rounded-full ${isNavbar ? 'w-[120px] h-[30px]' : 'w-[160px] h-[40px]'}`} />
+          <span 
+            className={`font-normal text-white drop-shadow-[0_0_12px_rgba(14,91,255,0.8)] leading-none ${isNavbar ? 'text-4xl pr-1' : 'text-5xl pr-2'}`}
+            style={{
+              fontFamily: "'Pacifico', cursive",
+              textShadow: '0 0 10px rgba(14, 91, 255, 0.95), 0 0 20px rgba(14, 91, 255, 0.75), 0 0 35px rgba(59, 130, 246, 0.6)',
+            }}
+          >
+            jaffa
+          </span>
+        </div>
+        
+        {/* SHAWARMA Logo Subtext */}
+        <span className={`font-inter text-[#0E5BFF] font-extrabold uppercase leading-none ${
+          isNavbar ? 'text-[11px] tracking-[0.45em] mt-1' : 'text-[14px] tracking-[0.55em] mt-3'
+        }`}>
+          SHAWARMA
+        </span>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center justify-center pointer-events-none select-none">

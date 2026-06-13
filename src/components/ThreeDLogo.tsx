@@ -17,15 +17,21 @@ export const ThreeDLogo: React.FC = () => {
     // 1. Create Scene
     const scene = new THREE.Scene();
 
+    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 768;
+
     // 2. Create Camera (Optimized scale to prevent Y clipping)
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
     camera.position.set(0, 0, 6.4);
 
-    // 3. Create WebGL Renderer
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    // 3. Create WebGL Renderer (optimized for mobile vs desktop)
+    const renderer = new THREE.WebGLRenderer({ 
+      antialias: !isMobile, 
+      alpha: true,
+      powerPreference: 'high-performance'
+    });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
+    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = false; // Disable expensive shadowmaps (floating logo on transparent bg needs no shadowmap)
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.4;
     container.appendChild(renderer.domElement);
@@ -56,7 +62,7 @@ export const ThreeDLogo: React.FC = () => {
 
     // 4.5. Add 3D Orbiting Glowing Particles
     const particleGeometry = new THREE.BufferGeometry();
-    const particleCount = 180;
+    const particleCount = isMobile ? 60 : 180;
     const positions = new Float32Array(particleCount * 3);
     const particleSpeeds = new Float32Array(particleCount);
     const particleRadii = new Float32Array(particleCount);

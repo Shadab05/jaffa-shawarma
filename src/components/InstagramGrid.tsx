@@ -213,6 +213,40 @@ const ReelCard: React.FC<ReelCardProps> = ({ reel, globalMuted }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hovered, setHovered] = useState(false);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Only apply IntersectionObserver on touch/mobile devices to avoid interfering with hover on desktop
+    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (!isMobile) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play()
+              .then(() => setIsPlaying(true))
+              .catch((err) => console.log("Intersection play failed:", err));
+          } else {
+            video.pause();
+            setIsPlaying(false);
+          }
+        });
+      },
+      {
+        threshold: 0.6, // plays when 60% of the card is visible in the viewport
+      }
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.unobserve(video);
+      observer.disconnect();
+    };
+  }, []);
+
   const handleMouseEnter = () => {
     setHovered(true);
     if (videoRef.current) {
